@@ -13,5 +13,6 @@ python -m venv ./venv
 Linux: source ./venv/bin/activate
 Windows: venv\Scripts\activate
 
-python -m pip -r requirements.txt
+Linux: python -m pip -r requirements.txt
+Windows: pip install -r requirements.txt
 ````
