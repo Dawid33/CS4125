@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 
 
@@ -61,7 +61,7 @@ DEFAULT_USER_PERMS = Permissions (
             booking = False,
         )
 
-DEFAULT_FACULTY_PERMS = DEFAULT_USER_PERMS
+DEFAULT_FACULTY_PERMS = replace(DEFAULT_USER_PERMS)
 DEFAULT_FACULTY_PERMS.booking = True
 
 class UserTypes(Enum):
@@ -72,18 +72,18 @@ class UserTypes(Enum):
 class GenericUser:
     def __init__(self):
         self.name: str = "default_username"
-        self.type = VISITOR
-        self.permissions = DEFAULT_PERMS
+        self.type = UserTypes.VISITOR
+        self.permissions = DEFAULT_USER_PERMS
 
     def set_faculty(self):
-        self.type = FACULTY
+        self.type = UserTypes.FACULTY
         # Find a way to combined permissions rather than overwrite existing
         # permissions.
         self.permissions = DEFAULT_FACULTY_PERMS
      
-student = User()
-faculty = User()
-faculty.permissions = DEFAULT_FACULTY_PERMS
+student = GenericUser()
+faculty = GenericUser()
+faculty.set_faculty()
 print("Second Example")
 print("Student = " + str(student.permissions))
 print("Faculty = " + str(faculty.permissions))
