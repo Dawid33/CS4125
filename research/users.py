@@ -61,8 +61,8 @@ DEFAULT_USER_PERMS = Permissions (
             booking = False,
         )
 
-DEFAULT_FACULTY_PERMS = replace(DEFAULT_USER_PERMS)
-DEFAULT_FACULTY_PERMS.booking = True
+DEFAULT_FACULTY_PERMS = replace(DEFAULT_USER_PERMS, booking = True)
+
 
 class UserTypes(Enum):
     STUDENT = 1
