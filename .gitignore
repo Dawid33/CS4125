@@ -1,6 +1,7 @@
-db.sqlite
+db.sqlite*
 **/__pycache__
 .idea
 .vscode
 venv
+
 
