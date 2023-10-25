@@ -1,12 +1,12 @@
-FROM python:3.8
+FROM python:3.9-alpine
 
-COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apk update && apk add curl gcc python3-dev build-base
 
-COPY . code
-WORKDIR /code
+RUN mkdir /app
+WORKDIR /app
 
-EXPOSE 8000
+COPY requirements.txt ./requirements.txt
+RUN pip3 install -r requirements.txt
+COPY . ./
+CMD ["python3", "app.py"]
 
-ENTRYPOINT ["python", "manage.py"]
-CMD ["runserver", "0.0.0.0:8000"]

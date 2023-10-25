@@ -1,3 +1,2 @@
 
-python research/users.py 2>&1 | less -R +F
-
+flask --app dev.py --debug run -p 8080 
