@@ -4,10 +4,6 @@ from . import db
 
 bp = Blueprint('login', __name__, url_prefix="/api")
 
-import os
-from flask import Flask, request
-from werkzeug.utils import secure_filename
-
 
 @bp.route('/register', methods=['POST'])
 def register():
