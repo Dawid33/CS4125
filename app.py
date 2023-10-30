@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 import multiprocessing
-from src import login
+from src import authentication
 import gunicorn.app.base
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
-app.register_blueprint(login.bp)
+app.register_blueprint(authentication.bp)
 
 app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
