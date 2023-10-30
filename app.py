@@ -15,6 +15,10 @@ app.wsgi_app = ProxyFix(
 def health_check():
     return "FANTASTIC"
 
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 
 class StandaloneApplication(gunicorn.app.base.BaseApplication):
     def __init__(self, app, options=None):
