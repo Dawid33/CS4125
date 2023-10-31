@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from src.db_query_manager import DBManager
+from src.db_query_manager.db_manager import DBManager
 
 auth = Blueprint('authentication', __name__)
 
 db_manager = DBManager()
 
+# API call that communicates with the database to register a user
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -32,7 +33,8 @@ def register():
                 return redirect(url_for('authentication.login'))
             
     return render_template('authentication/register.html')
-    
+  
+# API call that logs in the user and creates a session
 @auth.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

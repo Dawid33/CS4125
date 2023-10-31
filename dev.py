@@ -1,7 +1,7 @@
-from flask import Flask, session
-from src.db import db
-from src.authentication import auth
-from src.home_page import home
+from flask import Flask
+from model.db import db
+from src.authentication.authentication import auth
+from src.home.home_page import home
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -12,7 +12,6 @@ db.init_app(app)
 
 app.register_blueprint(auth)
 app.register_blueprint(home)
-        
 
 with app.app_context():
     db.create_all()
