@@ -45,7 +45,7 @@ def login():
         if user:
             if user.password == password:
                 session['user_id'] = user.user_id
-                return redirect(url_for("home_page.load"))
+                return render_template("home/home.html")
             else:
                 flash('Login failed. Password is incorrect')
         else:
