@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-import uuid
 
 db = SQLAlchemy()
 
