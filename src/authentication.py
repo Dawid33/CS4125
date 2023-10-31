@@ -1,116 +1,61 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash, session, send_from_directory
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from src.db_manager import DBManager
 
-from . import db
+auth = Blueprint('authentication', __name__)
 
-bp = Blueprint('login', __name__, url_prefix="/api")
+db_manager = DBManager()
 
-
-@bp.route('/register', methods=['POST'])
+# API call that communicates with the database to register a user
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
-    result = {
-        "success": False,
-    }
-    try:
-        email = request.form['email']
-        password = request.form['password']
-        display_name = request.form['display_name']
-    except Exception as e:
-        print(e)
-        result['error'] = 'Internal Error: Failed while reading post request form data'
-        return result
-
-    try:
-        db_conn = db.get_db()
-    except Exception as e:
-        print(e)
-        result['error'] = 'Internal Error: Cannot connect to database'
-        return result
-
-    try:
-        cursor = db_conn.cursor()
-        cursor.execute('SELECT email FROM users WHERE email = ?', (email,))
-        possible_user = cursor.fetchone()
-    except Exception as e:
-        print(e)
-        result['error'] = 'Internal Error: Failed to execute SQL query'
-        return result
-
-    if not email:
-        result['error'] = 'Email is required.'
-    elif not password:
-        result['error'] = 'Password is required.'
-    elif not display_name:
-        result['error'] = 'Display name is required.'
-    elif possible_user is not None:
-        result['error'] = f"User with email '{email}' is already registered."
-
-    if result.get('error') is None:
-        try:
-            cursor.execute('INSERT INTO users (display_name, email, password) VALUES (?, ?, ?)',
-                           (display_name, email, password))
-
-            cursor.execute("SELECT user_id FROM users WHERE email = ?", (email,))
-            db_result = cursor.fetchone()
-
-            result['user_id'] = db_result[0]
-
-            db_conn.commit()
-        except Exception as e:
-            print(e)
-            result['error'] = 'Internal Error: Database request failed, unable to register user'
-        result['success'] = True
-
-    return result
-
-
-@bp.route('/login', methods=['POST'])
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        user_type_id=request.form.get('role')
+        
+        if(request.form.get('Student')):
+            user_type_id = 0
+        else:
+            user_type_id = 1
+            
+        existing_user = db_manager.get_user_by_username(username)
+        
+        if existing_user:
+            flash('Username is already in use. Please choose a different one.')
+        else:
+            existing_email = db_manager.get_user_by_email(email)
+            if existing_email:
+                flash('Email is already registered. Please use a different email.')
+            else:
+                db_manager.create_user(username, email, password, user_type_id)
+                flash('Registration successful! You can now log in.')
+                return redirect(url_for('authentication.login'))
+            
+    return render_template('authentication/register.html')
+  
+# API call that logs in the user and creates a session
+@auth.route('/', methods=['GET', 'POST'])
 def login():
-    result = {
-        "success": False,
-    }
-    try:
-        email = request.form['email']
-        password = request.form['password']
-    except Exception as e:
-        print(e)
-        result['error'] = 'Internal Error: Failed while reading post request form data'
-        return result
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        user = db_manager.get_user_by_username(username)
+        if user:
+            if user.password == password:
+                session['user_id'] = user.user_id
+                return render_template("home/home.html")
+            else:
+                flash('Login failed. Password is incorrect')
+        else:
+            flash('Login failed, Username is incorrect')
+        
+    return render_template('authentication/login.html')
+                
+                
 
-    try:
-        db_conn = db.get_db()
-    except Exception as e:
-        print(e)
-        result['error'] = 'Internal Error: Cannot connect to database'
-        return result
 
-    try:
-        cursor = db_conn.cursor()
-        cursor.execute("SELECT password, user_id FROM users WHERE email = ?", (email,))
-        db_result = cursor.fetchone()
-    except Exception as e:
-        print(e)
-        result['error'] = 'Internal Error: Failed to execute SQL query'
-        return result
 
-    if db_result is None:
-        result['error'] = 'Incorrect email or password'
-    elif db_result[0] != password:
-        result['error'] = 'Incorrect password'
-
-    if result.get('error'):
-        result['success'] = False
-    else:
-        try:
-            cursor = db_conn.cursor()
-            cursor.execute("SELECT user_id FROM users WHERE email = ?", (email,))
-            db_result = cursor.fetchone()
-
-            result['user_id'] = db_result[0]
-        except Exception as e:
-            print(e)
-            result['error'] = 'Internal Error: Failed to execute SQL query'
-
-        result['success'] = True
-    return result
-
+        
 

@@ -5,7 +5,7 @@ import gunicorn.app.base
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
-app.register_blueprint(authentication.bp)
+app.register_blueprint(authentication.auth)
 
 app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
@@ -15,9 +15,9 @@ app.wsgi_app = ProxyFix(
 def health_check():
     return "FANTASTIC"
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
 
 
 class StandaloneApplication(gunicorn.app.base.BaseApplication):

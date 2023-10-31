@@ -1,15 +1,15 @@
-from flask import Flask, render_template
-from src import authentication
+from flask import Flask
+from models.db import db
+from src.authentication import auth
 
-app = Flask(__name__)
-app.register_blueprint(authentication.bp)
+app = Flask(__name__, static_url_path='/static')
 
-@app.route("/")
-def index():
-    return render_template("authentication/login.html")
+app.secret_key = 'cs4125'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cs4125_database.db'
 
+db.init_app(app)
 
-@app.route("/register")
-def register():
-    return render_template("authentication/register.html")
+app.register_blueprint(auth)
 
+with app.app_context():
+    db.create_all()
