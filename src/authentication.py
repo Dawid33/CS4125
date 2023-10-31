@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from src.db_query_manager.db_manager import DBManager
+from src.db_manager import DBManager
 
 auth = Blueprint('authentication', __name__)
 

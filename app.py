@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import multiprocessing
-from src.authentication import authentication
+from src import authentication
 import gunicorn.app.base
 from werkzeug.middleware.proxy_fix import ProxyFix
 

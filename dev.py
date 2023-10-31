@@ -1,7 +1,7 @@
 from flask import Flask
-from model.db import db
-from src.authentication.authentication import auth
-from src.home.home_page import home
+from models.db import db
+from src.authentication import auth
+from src.home_page import home
 
 app = Flask(__name__, static_url_path='/static')
 
