@@ -3,8 +3,17 @@ from src.db_manager import DBManager
 
 search = Blueprint('search', __name__)
 
-@search.route('/search', methods=['GET', 'POST'])
+db_manager = DBManager()
+
+@search.route('/search', methods=['GET'])
 def register():
-     return render_template("search/search.html")
+     title = request.args["title"].replace("\"", '')
+     print(title)
+     books = db_manager.search_by_title(title)
+     results = ""
+     for book in books:
+          results += render_template("search/book_card.html", title=book.title, author=book.author)
+
+     return render_template("search/search.html", results=results)
 
 
