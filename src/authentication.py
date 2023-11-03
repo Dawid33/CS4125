@@ -30,7 +30,7 @@ def register():
     return render_template('authentication/register.html')
   
 # API call that logs in the user and creates a session
-@auth.route('/', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('username')

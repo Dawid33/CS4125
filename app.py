@@ -1,11 +1,15 @@
 from flask import Flask, render_template
 import multiprocessing
-from src import authentication
+from src.authentication import auth
+from src.user_profile import profile
+from src.search import search
 import gunicorn.app.base
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
-app.register_blueprint(authentication.auth)
+app.register_blueprint(auth)
+app.register_blueprint(profile)
+app.register_blueprint(search)
 
 app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
@@ -15,9 +19,9 @@ app.wsgi_app = ProxyFix(
 def health_check():
     return "FANTASTIC"
 
-# @app.route("/")
-# def index():
-#     return render_template("index.html")
+@app.route("/")
+def index():
+    return render_template("home/home.html")
 
 
 class StandaloneApplication(gunicorn.app.base.BaseApplication):
