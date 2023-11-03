@@ -9,7 +9,7 @@ class DBManager:
         student_id = str(uuid.uuid1())
 
         # Create a new user
-        student_user = User(user_id=student_id, username=username, email=email, password=password, is_admin=0, user_type_id=user_type, is_blocked=0)
+        student_user = User(user_id=student_id, username=username, email=email, password=password, is_admin=0, user_type=user_type, is_blocked=0)
         
         db.session.add(student_user)
         db.session.commit()
