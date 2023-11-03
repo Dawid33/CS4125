@@ -15,4 +15,3 @@ app.register_blueprint(profile)
 
 with app.app_context():
     db.create_all()
-    
