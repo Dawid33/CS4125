@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from src.users.library_member import *
 from src.db_manager import DBManager
 
 auth = Blueprint('authentication', __name__)
@@ -12,13 +13,8 @@ def register():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
-        user_type_id=request.form.get('role')
-        
-        if(request.form.get('Student')):
-            user_type_id = 0
-        else:
-            user_type_id = 1
-            
+        user_type=request.form.get('role').upper()
+                    
         existing_user = db_manager.get_user_by_username(username)
         
         if existing_user:
@@ -28,8 +24,8 @@ def register():
             if existing_email:
                 flash('Email is already registered. Please use a different email.')
             else:
-                db_manager.create_user(username, email, password, user_type_id)
-                flash('Registration successful! You can now log in.')
+                db_manager.create_user(username, email, password, user_type)
+                flash('Registration successful! You can now log in')
                 return redirect(url_for('authentication.login'))
             
     return render_template('authentication/register.html')
@@ -45,14 +41,17 @@ def login():
         if user:
             if user.password == password:
                 session['user_id'] = user.user_id
-                return render_template("home/home.html")
+                return redirect(url_for('authentication.home'))
             else:
                 flash('Login failed. Password is incorrect')
         else:
             flash('Login failed, Username is incorrect')
         
     return render_template('authentication/login.html')
-                
+
+@auth.route('/home', methods=['GET', 'POST'])
+def home():
+    return render_template("home/home.html")                
                 
 
 
