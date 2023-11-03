@@ -1,0 +1,82 @@
+main {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-gap: 1rem;
+}
+
+main>div {
+  grid-column: 1;
+  overflow-y: scroll;
+  position: sticky;
+  height: calc(100vh - var(--header-height));
+  overscroll-behavior: contain;
+  top: var(--header-height);
+}
+
+main>div:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  height: 95%;
+  top: 2.5%;
+  width: 1px;
+  background-color: var(--orange);
+}
+
+main>div>nav {
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+main>div>nav h2 {
+  font-size: medium
+}
+
+main>content {
+  grid-column: 2;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0 0 0;
+}
+
+body>hr {
+  margin: 0 1rem 0 1rem;
+}
+
+.card {
+  width: 100%;
+  padding: 1.5rem;
+  margin-right: 1rem;
+  position: relative;
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
+  overflow: hidden;
+  border-radius: 0rem 1rem 1rem 1rem;
+  background-color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.card:after {
+  content: "";
+  position: absolute;
+  margin: -20px;
+  width: 40px;
+  height: 40px;
+  transform: rotate(45deg);
+  background-color: var(--purple);
+}
+
+.card p,
+hr {
+  margin: 0;
+}
+
+.title-container {
+  width: max-content
+}
+
+.author {
+  color: grey;
+  font-size: small;
+}

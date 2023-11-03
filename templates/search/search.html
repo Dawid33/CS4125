@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<title>Search</title>
+<link href="{{ url_for('static', filename='search/search.css') }}" rel="stylesheet" />
+{% endblock head_extra %}
+
+{% block main %}
+
+<main>
+  <div>
+    <nav>
+      <h2> My Search Options </h2>
+      <ul>
+        <li>Search Things</li>
+      </ul>
+    </nav>
+  </div>
+
+  <content>
+    <div class="card">
+      <div class="title-container">
+        <p class="title">Book Title</p>
+        <hr />
+      </div>
+      <p class="author">Dawid Sobczak et.al</p>
+    </div>
+    <div class="card">
+      <div class="title-container">
+        <p class="title">Book Title</p>
+        <hr />
+      </div>
+      <p class="author">Dawid Sobczak et.al</p>
+    </div>
+    <div class="card">
+      <div class="title-container">
+        <p class="title">Book Title</p>
+        <hr />
+      </div>
+      <p class="author">Dawid Sobczak et.al</p>
+    </div>
+    <div class="card">
+      <div class="title-container">
+        <p class="title">Book Title</p>
+        <hr />
+      </div>
+      <p class="author">Dawid Sobczak et.al</p>
+    </div>
+  </content>
+</main>
+{% endblock main %}
