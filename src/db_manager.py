@@ -28,3 +28,22 @@ class DBManager:
         # Query the database to get a user by their email
         user = User.query.filter_by(email=email).first()
         return user
+
+
+    def insert_book(self, title, author):
+        book = Book (
+            book_id = str(uuid.uuid4()),
+            isbn = 'lol',
+            title = title,
+            author = author,
+            publisher = 'lol',
+            num_of_pages = 'lol',
+            pub_date = 'your mom'
+        )
+        db.session.add(book)
+        db.session.commit()
+
+    def search_by_title(self, title):
+        search = "%{}%".format(title)
+        books = Book.query.filter(Book.title.like(search)).all()
+        return books

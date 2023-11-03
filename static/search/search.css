@@ -9,7 +9,7 @@ main>div {
   grid-column: 1;
   overflow-y: scroll;
   position: sticky;
-  height: calc(100vh - var(--header-height));
+  max-height: calc(100vh - var(--header-height));
   overscroll-behavior: contain;
   top: var(--header-height);
 }
@@ -20,7 +20,7 @@ main>div:before {
   right: 0;
   height: 95%;
   top: 2.5%;
-  width: 1px;
+  width: 0.5px;
   background-color: var(--orange);
 }
 
@@ -38,6 +38,7 @@ main>content {
   display: flex;
   flex-direction: column;
   padding: 1rem 0 0 0;
+  margin-right: 1rem;
 }
 
 body>hr {
