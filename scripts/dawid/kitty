@@ -1,10 +1,10 @@
 new_tab code
 layout horizontal
-launch --title "code" bash --init-file <(scripts/dawid/term.sh)
+launch --title "code" bash 
 
 new_tab terminal 
 layout horizontal 
-launch --title "terminal" bash --init-file <(scripts/dawid/term.sh)
+launch --title "terminal" bash 
 
 new_tab ranger
 enabled_layouts horizontal,stack

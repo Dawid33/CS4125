@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import multiprocessing
+from models.db import db
 from src.authentication import auth
 from src.user_profile import profile
 from src.search import search
@@ -7,6 +8,7 @@ import gunicorn.app.base
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+
 app.register_blueprint(auth)
 app.register_blueprint(profile)
 app.register_blueprint(search)
@@ -14,6 +16,9 @@ app.register_blueprint(search)
 app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
+
+app.secret_key = 'cs4125'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cs4125_database.db'
 
 @app.route("/health_check")
 def health_check():
@@ -41,6 +46,9 @@ class StandaloneApplication(gunicorn.app.base.BaseApplication):
 
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.init_app(app)
+        db.create_all()
     options = {
         'bind': '%s:%s' % ('0.0.0.0', '8080'),
         'workers': (multiprocessing.cpu_count() * 2) + 1,

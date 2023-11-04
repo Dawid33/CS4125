@@ -7,12 +7,14 @@ db_manager = DBManager()
 
 @search.route('/search', methods=['GET'])
 def register():
-     title = request.args["title"].replace("\"", '')
-     print(title)
-     books = db_manager.search_by_title(title)
      results = ""
-     for book in books:
-          results += render_template("search/book_card.html", title=book.title, author=book.author)
+
+     if request.args.get("title") is not None:
+          title = request.args["title"].replace("\"", '')
+          print(title)
+          books = db_manager.search_by_title(title)
+          for book in books:
+               results += render_template("search/book_card.html", title=book.title, author=book.author)
 
      return render_template("search/search.html", results=results)
 

@@ -20,7 +20,7 @@ main>div:before {
   right: 0;
   height: 95%;
   top: 2.5%;
-  width: 0.5px;
+  width: 0.75px;
   background-color: var(--orange);
 }
 
