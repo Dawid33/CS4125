@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<title>Search</title>
+<link href="{{ url_for('static', filename='book/book.css') }}" rel="stylesheet" />
+{% endblock head_extra %}
+
+{% block main %}
+
+<main>
+  <div id='container'>
+    <img src="{{ url_for('static', filename='favicon.ico') }}" />
+    <content>
+      <table>
+        <tr>
+          <div id="title">Title
+            <hr />
+          </div>
+        </tr>
+        <tr>
+          <div id="author">Author
+            <hr />
+          </div>
+        </tr>
+      </table>
+    </content>
+  </div>
+</main>
+
+{% endblock main %}

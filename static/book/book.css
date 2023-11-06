@@ -1,0 +1,28 @@
+main {
+  grid-row: 2;
+}
+
+#container {
+  margin: 0 1rem 0 1rem;
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  grid-gap: 2rem;
+}
+
+#container>img {
+  width: 100%;
+  margin: 1rem 0rem 1rem 0rem;
+}
+
+#container>content {
+  padding: 1.5rem;
+  margin: 1rem 0rem 1rem 1rem;
+}
+
+#container>content>div {
+  width: fit-content;
+}
+
+#container>content>div>hr {
+  margin: 0;
+}
