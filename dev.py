@@ -19,9 +19,9 @@ app.register_blueprint(search)
 app.register_blueprint(book)
 app.register_blueprint(notify)
 
-@app.route("/")
-def health_check():
-    return render_template("home/home.html")
+# @app.route("/")
+# def health_check():
+#     return render_template("home/home.html")
 
 @app.route('/test_email', methods=['GET'])
 def test_email():

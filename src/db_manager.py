@@ -14,26 +14,28 @@ class DBManager:
         
         db.session.add(student_user)
         db.session.commit()
-        
+
+    # Query the database to get a user by their user_id        
     def get_user_by_id(self, user_id):
-        # Query the database to get a user by their user_id
         user = User.query.filter_by(user_id=user_id).first()
         return user
 
+    # Query the database to get a user by their username
     def get_user_by_username(self, username):
-        # Query the database to get a user by their username
         user = User.query.filter_by(username=username).first()
         return user
-    
+
+    # Query the database to get a user by their email    
     def get_user_by_email(self, email):
-        # Query the database to get a user by their email
         user = User.query.filter_by(email=email).first()
         return user
 
+    # Query the database to get a book by its' id    
     def get_book_by_id(self, book_id):
         book = Book.query.filter_by(book_id=str(book_id)).first()
         return book
 
+    # Function to add book to database
     def insert_book(self, title, author):
         book = Book (
             book_id = str(uuid.uuid4()),
