@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.register_blueprint(auth)
 app.register_blueprint(profile)
 app.register_blueprint(search)
+app.register_blueprint(book)
 
 app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
