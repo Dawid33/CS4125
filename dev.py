@@ -17,9 +17,9 @@ app.register_blueprint(profile)
 app.register_blueprint(search)
 app.register_blueprint(book)
 
-@app.route("/")
-def health_check():
-    return render_template("home/home.html")
+# @app.route("/")
+# def health_check():
+#     return render_template("home/home.html")
 
 with app.app_context():
     db.create_all()
