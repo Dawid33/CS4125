@@ -4,6 +4,7 @@ from src.authentication import auth
 from src.user_profile import profile
 from src.search import search
 from src.book import book
+from src.notification import notify, EmailNotification
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -16,10 +17,16 @@ app.register_blueprint(auth)
 app.register_blueprint(profile)
 app.register_blueprint(search)
 app.register_blueprint(book)
+app.register_blueprint(notify)
 
 @app.route("/")
 def health_check():
     return render_template("home/home.html")
+
+@app.route('/test_email', methods=['GET'])
+def test_email():
+    notification = EmailNotification("My Message")
+    return notification.send("dawidsobczak@fastmail.com")
 
 with app.app_context():
     db.create_all()
