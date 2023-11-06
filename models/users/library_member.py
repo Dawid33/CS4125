@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
-from src.users.user import User
+from models.users.user import User
 
 # Abstract class that extends the user class, defines the main functionality for library members
 class LibraryMember(User, ABC):

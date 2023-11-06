@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import multiprocessing
-from models.db import db
+from instance.db import db
 from src.authentication import auth
 from src.user_profile import profile
 from src.search import search

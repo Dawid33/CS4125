@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import select
-from models.db import *
-from models.db import db
+from instance.db import *
 import uuid
 
 class DBManager:
