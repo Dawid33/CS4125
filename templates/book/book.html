@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "book/book_base.html" %}
 
 {% block head_extra %}
 <title>Search</title>
@@ -9,21 +9,30 @@
 
 <main>
   <div id='container'>
-    <img src="{{ url_for('static', filename='favicon.ico') }}" />
+    {% block content %}
+    <img
+      src="https://img1.od-cdn.com/ImageType-400/0128-1/A5A/9D4/1D/%7BA5A9D41D-5407-4042-9CE0-F7BF21B62A03%7DImg400.jpg" />
     <content>
       <table>
         <tr>
-          <div id="title">Title
-            <hr />
-          </div>
+          <td>
+            <div id="title">Title
+              <hr />
+            </div>
+          </td>
+          <td>: {{ title }}</td>
         </tr>
         <tr>
-          <div id="author">Author
-            <hr />
-          </div>
+          <td>
+            <div id="author">Author
+              <hr />
+            </div>
+          </td>
+          <td>: {{ author }}</td>
         </tr>
       </table>
     </content>
+    {% endblock content %}
   </div>
 </main>
 

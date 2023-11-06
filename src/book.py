@@ -5,17 +5,12 @@ book = Blueprint('book', __name__)
 
 db_manager = DBManager()
 
-@book.route('/book', methods=['GET'])
-def register():
-     # results = ""
-
-     # if request.args.get("title") is not None:
-     #      title = request.args["title"].replace("\"", '')
-     #      print(title)
-     #      books = db_manager.search_by_title(title)
-     #      for book in books:
-     #           results += render_template("search/book_card.html", title=book.title, author=book.author)
-
-     return render_template("book/book.html")
+@book.route('/book/<uuid:book_id>', methods=['GET'])
+def register(book_id):
+     book = db_manager.get_book_by_id(book_id)
+     if book is None: 
+          return render_template("book/book_not_found.html")
+     return render_template("book/book.html", title=book.title, author=book.author)
+     
 
 

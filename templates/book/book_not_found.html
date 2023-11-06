@@ -1,0 +1,20 @@
+{% extends "book/book_base.html" %}
+
+{% block head_extra %}
+<title>Search</title>
+<link href="{{ url_for('static', filename='book/book.css') }}" rel="stylesheet" />
+{% endblock head_extra %}
+
+{% block main %}
+
+<main>
+  <div id='container'>
+    {% block content %}
+    <content>
+      Sorry, could not find your book.
+    </content>
+    {% endblock content %}
+  </div>
+</main>
+
+{% endblock main %}

@@ -19,10 +19,10 @@ main {
   margin: 1rem 0rem 1rem 1rem;
 }
 
-#container>content>div {
+#container>content div {
   width: fit-content;
 }
 
-#container>content>div>hr {
+#container>content div>hr {
   margin: 0;
 }
