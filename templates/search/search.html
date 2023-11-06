@@ -1,24 +1,43 @@
 {% extends "base.html" %}
 
 {% block head_extra %}
-<title>Search</title>
-<link href="{{ url_for('static', filename='search/search.css') }}" rel="stylesheet" />
+    <title>Search</title>
+    <link href="{{ url_for('static', filename='search/search.css') }}" rel="stylesheet"/>
 {% endblock head_extra %}
 
 {% block main %}
 
-<main>
-  <div>
-    <nav>
-      <h2> My Search Options </h2>
-      <ul>
-        <li>Search Things</li>
-      </ul>
-    </nav>
-  </div>
+    <main>
 
-  <content>
-    {{ results | safe }}
-  </content>
-</main>
+
+        <div>
+            <nav>
+                <h2> My Search Options </h2>
+                <ul>
+                    <li>Search for books by title. Enter the title and click search.</li>
+                    <div class="search-bar">
+                        <!-- Search form -->
+                        <form action="{{ url_for('search.search_books') }}" method="get">
+                            <input type="text" name="title" placeholder="Enter book title">
+                            <input type="submit" value="Search">
+                        </form>
+                    </div>
+                </ul>
+            </nav>
+        </div>
+
+        <content>
+            <!-- Check if there are books in the list -->
+            {% if books %}
+                <!-- Iterate over each book and include the book_card template -->
+                {% for book in books %}
+                    {% include "search/book_card.html" with context %}
+                {% endfor %}
+            {% else %}
+                <!-- Display a message if no books were found -->
+                <p>No books found. Try a different search.</p>
+            {% endif %}
+        </content>
+    </main>
+
 {% endblock main %}

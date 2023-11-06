@@ -4,14 +4,16 @@ from models.db import *
 from models.db import db
 import uuid
 
+
 class DBManager:
     # Function to add a user to db
     def create_user(self, username, email, password, user_type):
         student_id = str(uuid.uuid1())
 
         # Create a new user
-        student_user = User(user_id=student_id, username=username, email=email, password=password, is_admin=0, user_type=user_type, is_blocked=0)
-        
+        student_user = User(user_id=student_id, username=username, email=email, password=password, is_admin=0,
+                            user_type=user_type, is_blocked=0)
+
         db.session.add(student_user)
         db.session.commit()
 
@@ -37,14 +39,14 @@ class DBManager:
 
     # Function to add book to database
     def insert_book(self, title, author):
-        book = Book (
-            book_id = str(uuid.uuid4()),
-            isbn = 'lol',
-            title = title,
-            author = author,
-            publisher = 'lol',
-            num_of_pages = 'lol',
-            pub_date = 'your mom'
+        book = Book(
+            book_id=str(uuid.uuid4()),
+            isbn='lol',
+            title=title,
+            author=author,
+            publisher='lol',
+            num_of_pages='lol',
+            pub_date='your mom'
         )
         db.session.add(book)
         db.session.commit()
@@ -56,3 +58,26 @@ class DBManager:
         search = "%{}%".format(title)
         books = Book.query.filter(Book.title.like(search)).all()
         return books
+
+    def filter_books(self, book_id, title, author):
+        """Fetch books from the database with optional filters."""
+        # Start with a query on the Book model
+        query = Book.query
+
+        # If an ID is provided, add a filter for the ID
+        if book_id:
+            query = query.filter_by(book_id=book_id)
+
+        # If a title is provided, add a filter for the title
+        if title:
+            search_title = f"%{title}%"
+            query = query.filter(Book.title.like(search_title))
+
+        # If an author is provided, add a filter for the author
+        if author:
+            search_author = f"%{author}%"
+            query = query.filter(Book.author.like(search_author))
+
+
+        # Execute the query and return the results
+        return query.all()
