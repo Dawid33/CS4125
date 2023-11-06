@@ -1,4 +1,4 @@
-from src.users.user import User
+from models.users.user import User
 
 # Admin user type controls the book catalogue, and can also block/unblock users and waive user fines
 # Extends the User class

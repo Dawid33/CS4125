@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from src.db_manager import DBManager
-from src.users.library_member import *
+from models.database_manager.db_manager import DBManager
+from models.users.library_member import *
 
 auth = Blueprint('authentication', __name__)
 
@@ -54,7 +54,6 @@ def home():
     if 'user_id' in session:
         return render_template("home/home.html")  
     else:
-        flash('Login failed, failed to load session')
         return redirect(url_for('authentication.login'))
  
                 

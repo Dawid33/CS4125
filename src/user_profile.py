@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from src.users.library_member import *
-from src.authentication import db_manager
+from models.users.library_member import *
+from models.database_manager.db_manager import DBManager
 
 profile = Blueprint('profile', __name__)
+
+db_manager = DBManager()
 
 
 @profile.route('/profile', methods=['GET', 'POST'])
