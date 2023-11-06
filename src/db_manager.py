@@ -59,14 +59,10 @@ class DBManager:
         books = Book.query.filter(Book.title.like(search)).all()
         return books
 
-    def filter_books(self, book_id, title, author):
+    def filter_books(self, title, author, isbn):
         """Fetch books from the database with optional filters."""
         # Start with a query on the Book model
         query = Book.query
-
-        # If an ID is provided, add a filter for the ID
-        if book_id:
-            query = query.filter_by(book_id=book_id)
 
         # If a title is provided, add a filter for the title
         if title:
@@ -77,6 +73,10 @@ class DBManager:
         if author:
             search_author = f"%{author}%"
             query = query.filter(Book.author.like(search_author))
+            
+        if isbn:
+            search_isbn = f"%{isbn}"
+            query = query.filter(Book.isbn.like(search_isbn))
 
 
         # Execute the query and return the results

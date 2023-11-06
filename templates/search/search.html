@@ -7,37 +7,38 @@
 
 {% block main %}
 
-    <main>
+<main>
+    <div>
+        <nav>
+            <h2> My Search Options </h2>
+            <ul>
+                <li>Search for books by title, author, ISBN, or ID. Enter the details and click search.</li>
+            </ul>
+        </nav>
 
-
-        <div>
-            <nav>
-                <h2> My Search Options </h2>
-                <ul>
-                    <li>Search for books by title. Enter the title and click search.</li>
-                    <div class="search-bar">
-                        <!-- Search form -->
-                        <form action="{{ url_for('search.search_books') }}" method="get">
-                            <input type="text" name="title" placeholder="Enter book title">
-                            <input type="submit" value="Search">
-                        </form>
-                    </div>
-                </ul>
-            </nav>
+        <div class="search-bar">
+            <!-- Search form -->
+            <form action="{{ url_for('search.search_books') }}" method="get">
+                <input class="search-inputs" type="text" name="title" placeholder="Enter book title"><br>
+                <input class="search-inputs" type="text" name="author" placeholder="Enter author name"><br>
+                <input class="search-inputs" type="text" name="isbn" placeholder="Enter ISBN"><br>
+                <input class="search-inputs search-button" type="submit" value="Search">
+            </form>
         </div>
+    </div>
 
-        <content>
-            <!-- Check if there are books in the list -->
-            {% if books %}
-                <!-- Iterate over each book and include the book_card template -->
-                {% for book in books %}
-                    {% include "search/book_card.html" with context %}
-                {% endfor %}
-            {% else %}
-                <!-- Display a message if no books were found -->
-                <p>No books found. Try a different search.</p>
-            {% endif %}
-        </content>
-    </main>
+    <content>
+        <!-- Check if there are books in the list -->
+        {% if books %}
+            <!-- Iterate over each book and include the book_card template -->
+            {% for book in books %}
+                {% include "search/book_card.html" with context %}
+            {% endfor %}
+        {% else %}
+            <!-- Display a message if no books were found -->
+            <p>No books found. Try a different search.</p>
+        {% endif %}
+    </content>
+</main>
 
 {% endblock main %}
