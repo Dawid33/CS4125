@@ -5,23 +5,21 @@ search = Blueprint('search', __name__)
 
 db_manager = DBManager()
 
-@search.route('/search', methods=['GET'])
-def register():
-     results = ""
 
-     if request.args.get("title") is not None:
-          title = request.args["title"].replace("\"", '')
-          print(title)
-          books = db_manager.search_by_title(title)
-          for book in books:
-               results += render_template("search/book_card.html", id=book.book_id, title=book.title, author=book.author)
+@search.route('/search', methods=['GET'])
+def search_books():
+     
+     """Allows a User to query the db for a book based on title, author and isbn"""
+     # Get query parameters
+     title = request.args.get('title', '').strip()
+     author = request.args.get('author', '').strip()
+     isbn = request.args.get('isbn', '').strip()
+
+     # Use the parameters to filter the book search
+     if title or author or isbn:
+          books = db_manager.filter_books(title=title, author=author, isbn=isbn)
      else:
           books = db_manager.get_default_catalog()
-          for book in books:
-               # Why is this returned in a tuple? ¯\_(ツ)_/¯ 
-               book = book[0]
-               results += render_template("search/book_card.html", id=book.book_id, title=book.title, author=book.author)
 
-     return render_template("search/search.html", results=results)
-
-
+     # Render the template with the filtered books
+     return render_template('search/search.html', books=books)

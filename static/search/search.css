@@ -81,3 +81,21 @@ hr {
   color: grey;
   font-size: small;
 }
+
+.isbn{
+  color: grey;
+  font-size: small;
+}
+
+.search-bar{
+  padding-top: 1%;
+}
+
+.search-inputs{
+  padding: 1%;
+  margin: 1%;
+}
+
+.search-button{
+  color: ;
+}
