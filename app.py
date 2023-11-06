@@ -4,6 +4,7 @@ from models.db import db
 from src.authentication import auth
 from src.user_profile import profile
 from src.search import search
+from src.book import book
 import gunicorn.app.base
 from werkzeug.middleware.proxy_fix import ProxyFix
 

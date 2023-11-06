@@ -14,7 +14,13 @@ def register():
           print(title)
           books = db_manager.search_by_title(title)
           for book in books:
-               results += render_template("search/book_card.html", title=book.title, author=book.author)
+               results += render_template("search/book_card.html", id=book.book_id, title=book.title, author=book.author)
+     else:
+          books = db_manager.get_default_catalog()
+          for book in books:
+               # Why is this returned in a tuple? ¯\_(ツ)_/¯ 
+               book = book[0]
+               results += render_template("search/book_card.html", id=book.book_id, title=book.title, author=book.author)
 
      return render_template("search/search.html", results=results)
 

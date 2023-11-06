@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select
 from models.db import *
 from models.db import db
 import uuid
@@ -29,6 +30,9 @@ class DBManager:
         user = User.query.filter_by(email=email).first()
         return user
 
+    def get_book_by_id(self, book_id):
+        book = Book.query.filter_by(book_id=str(book_id)).first()
+        return book
 
     def insert_book(self, title, author):
         book = Book (
@@ -42,6 +46,9 @@ class DBManager:
         )
         db.session.add(book)
         db.session.commit()
+
+    def get_default_catalog(self):
+        return db.session.execute(select(Book)).all()
 
     def search_by_title(self, title):
         search = "%{}%".format(title)
