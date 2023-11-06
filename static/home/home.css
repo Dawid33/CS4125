@@ -1,0 +1,36 @@
+
+
+.content{
+    padding-top: 2%;
+}
+
+.container{
+    display: grid !important;
+    grid-row: 2;
+    width: 100vh !important;
+    height: 100vh !important;
+    color: #18588f;
+
+}
+
+hr{
+    background-color: #c35229;
+    margin: 0.25rem 0rem 0rem 0rem;
+}
+
+.library-image{
+    width: 600px;
+    height: 400px;
+}
+
+.library-image-holder{
+   text-align: center;
+}
+
+h3{
+    font-weight: bold;
+}
+
+h2{
+    font-weight: bold;
+}
