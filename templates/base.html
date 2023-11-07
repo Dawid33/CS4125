@@ -19,32 +19,43 @@
 
 <body>
   <header>
-    <nav>
-      <ul>
-        <img src="{{ url_for('static', filename='assets/favicon.ico') }}" />
-        <a href="/">
-          <h2>Library</h2>
-        </a>
-        <li>
-          <a href="/search">
-            <h5>Search</h5>
+    <div>
+      <nav>
+        <ul>
+          <img src="{{ url_for('static', filename='assets/favicon.ico') }}" />
+          <a href="/">
+            <h2>Library</h2>
           </a>
-        </li>
-        <li>
-          <a href="/profile">
-            <h5>Profile</h5>
-          </a>
-        </li>
-      </ul>
+          <li>
+            <a href="/search">
+              <h5>Search</h5>
+            </a>
+          </li>
+          <li>
+            <a href="/profile">
+              <h5>Profile</h5>
+            </a>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="/logout">
+              <h5>Logout</h5>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <hr />
-    </nav>
+    </div>
   </header>
   {% block main %}
 
   {% endblock main %}
   <footer>
     <hr />
-    <a class="footer-link" href="https://github.com/Dawid33/CS4125" target="_blank"><h6 class="mt-4 mb-4 text-center footer-link">Made using Flask, PostgreSQL and <u>Design Patterns</u> 📚</h4></a>
+    <a class="footer-link" href="https://github.com/Dawid33/CS4125" target="_blank">
+      <h6 class="mt-4 mb-4 text-center footer-link">Made using Flask, PostgreSQL and <u>Design Patterns</u> 📚</h4>
+    </a>
   </footer>
 </body>
 
