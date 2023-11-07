@@ -1,5 +1,5 @@
-from src.catalogue.book_search import BookSearch
-from src.db_manager import DBManager
+from models.catalogue.book_search import BookSearch
+from models.database_manager.db_manager import DBManager
 
 class Catalogue(BookSearch):
     def __init__(self):
