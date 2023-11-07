@@ -85,3 +85,9 @@ class DBManager:
     def get_admin_id(self, is_admin):
         user = User.query.filter_by(is_admin=is_admin).first()
         return user
+    
+    # Method for blocking a user
+    def block_user(self, user_id):
+        user = User.query.filter_by(user_id=user_id).first()
+        setattr(user, 'is_blocked', 0)
+        db.session.commit()

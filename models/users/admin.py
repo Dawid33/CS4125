@@ -1,4 +1,5 @@
 from models.users.user import User
+from models.database_manager.db_manager import DBManager
 
 # Admin user type controls the book catalogue, and can also block/unblock users and waive user fines
 # Extends the User class
@@ -8,7 +9,7 @@ class Admin(User):
         # self.catalogue_manager = catalogue_manager
     
     def block_library_member(self, user):
-        pass
+        block = DBManager.block_user(self, user)
     
     def unblock_library_member(self, user):
         pass
