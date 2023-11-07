@@ -46,9 +46,6 @@ class Student(LibraryMember):
     def borrow_book(self, book_item):
         pass
     
-    def __json__(self):
-        return '<__json__>'
-
 # Faculty class that extends library member, defines the book limit, faculty user type and
 # functionality for borrowing books
 class Faculty(LibraryMember):

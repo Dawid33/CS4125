@@ -5,8 +5,12 @@ from src.user_profile import profile
 from src.search import search
 from src.book import book
 from src.notification import notify, EmailNotification
+from models.users.user import json
+from flask_json import FlaskJSON
 
 app = Flask(__name__, static_url_path='/static')
+json.init_app(app)
+
 
 app.secret_key = 'cs4125'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cs4125_database.db'

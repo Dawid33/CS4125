@@ -46,6 +46,7 @@ def login():
             if user.password == password:
                 # session['user_id'] = user.user_id
                 current_user = user_controller.create_user(user.user_id, user.username, user.email, user.password, user.user_type)
+                print(current_user)
                 session['user_id'] = current_user
                 return redirect(url_for('authentication.home'))
             else:

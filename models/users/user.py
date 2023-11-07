@@ -1,3 +1,6 @@
+from flask_json import FlaskJSON
+json = FlaskJSON()
+
 class User():
     def __init__(self, user_id, username, email, password):
         self.user_id = user_id
@@ -15,5 +18,11 @@ class User():
         pass
     
     def __str__(self):
-        return f"User Details( Id: {self.Id}, Username: {self.username}, Email: {self.email} )"
+        return f"User Details( Id: {self.user_id}, Username: {self.username}, Email: {self.email} )"
+
+    @json.encoder
+    def encoder(o):
+        if isinstance(o, User):
+            return "user" 
+
     
