@@ -1,7 +1,7 @@
 main {
   grid-row: 2;
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
 }
 
@@ -82,20 +82,20 @@ hr {
   font-size: small;
 }
 
-.isbn{
+.isbn {
   color: grey;
   font-size: small;
 }
 
-.search-bar{
+.search-bar {
   padding-top: 1%;
 }
 
-.search-inputs{
+.search-inputs {
   padding: 1%;
   margin: 1%;
 }
 
-.search-button{
+.search-button {
   color: ;
 }

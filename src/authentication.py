@@ -49,6 +49,14 @@ def login():
         
     return render_template('authentication/login.html')
 
+@auth.route('/logout', methods=['GET'])
+def logout():
+    if 'user_id' in session:
+        del session['user_id']
+    else:
+        flash('Already logged out')
+    return redirect(url_for('authentication.login'))
+
 @auth.route('/', methods=['GET', 'POST'])
 def home():
     if 'user_id' in session:

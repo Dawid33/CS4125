@@ -43,7 +43,7 @@ header a {
   color: inherit;
 }
 
-header>nav>hr,
+header>div>hr,
 body>footer>hr {
   margin: 0.25rem 0rem 0rem 0rem;
 }
@@ -52,12 +52,19 @@ hr {
   border-color: var(--orange);
 }
 
-header>nav {
+header>div {
   width: 100%;
-  vertical-align: middle;
 }
 
-header>nav>ul {
+header>div>nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: first baseline;
+}
+
+header>div>nav>ul {
   display: flex;
   flex-direction: row;
   margin: 0;
@@ -66,7 +73,7 @@ header>nav>ul {
   align-items: first baseline;
 }
 
-header>nav>ul>li {
+header>div>nav>ul>li {
   margin-left: 1rem;
   font-size: small;
 }
