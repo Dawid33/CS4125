@@ -12,9 +12,14 @@ db_manager = DBManager()
 @profile.route('/profile', methods=['GET', 'POST'])
 def user_profile():
     current_user = db_manager.get_user_by_id(session["user_id"])
-    admin = db_manager.get_admin_id(session["is_admin"])
-    if admin == 1:
-        return render_template('user_profile/admin_profile.html', user=admin)
     return render_template('user_profile/user_profile.html', user=current_user)
 
+@profile.route('/admin_profile', methods=['GET', 'POST'])
+def is_admin_profile():
+    current_user = db_manager.get_user_by_id(session["user_id"])
+    admin = db_manager.get_admin_id(session["is_admin"])
+    if admin == 1:
+        return render_template('user_profile/admin_profile.html', user=current_user)
+    else:
+        return render_template('user_profile/admin_profile.html', user=current_user)
 
