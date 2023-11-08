@@ -77,6 +77,11 @@ class DBManager:
             search_isbn = f"%{isbn}"
             query = query.filter(Book.isbn.like(search_isbn))
 
-
         # Execute the query and return the results
         return query.all()
+    
+    # Method for blocking a user
+    def block_user(self, user_id):
+        user = User.query.filter_by(user_id=user_id).first()
+        setattr(user, 'is_blocked', 0)
+        db.session.commit()
