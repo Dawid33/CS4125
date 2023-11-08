@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
+from sqlalchemy import select, update
 from instance.db import *
 import uuid
 
@@ -36,7 +36,12 @@ class DBManager:
         book = Book.query.filter_by(book_id=str(book_id)).first()
         return book
 
-    # Function to add book to database
+    # Query the database to get all book items for a type of book
+    def get_book_items_by_book_id(self, book_id):
+        books = BookItem.query.filter_by(book_id=str(book_id)).all()
+        return books
+
+    # Function to add book to the database
     def insert_book(self, title, author):
         book = Book(
             book_id=str(uuid.uuid4()),
@@ -49,6 +54,31 @@ class DBManager:
         )
         db.session.add(book)
         db.session.commit()
+
+    # Function to add book item to the database
+    def insert_book_item(self, book_id):
+        book_item = BookItem(
+            book_item_id=str(uuid.uuid4()),
+            book_id=str(book_id),
+            is_borrowed=False,
+            due_date=""
+        )
+        db.session.add(book_item)
+        db.session.commit()
+
+    def insert_borrowed_book(self, user_id, book_item):
+        book_item.is_borrowed = True
+        borrowed = BorrowedBook(
+            borrow_id=str(uuid.uuid4()),
+            user_id=str(user_id),
+            book_item_id=str(book_item.book_item_id),
+            borrow_date="When I was there",
+            return_date="Third orbit of Saturn since the reign of Xi",
+        )
+        db.session.add(borrowed)
+        db.session.commit()
+        return True
+
 
     def get_default_catalog(self):
         return db.session.execute(select(Book)).all()
