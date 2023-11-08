@@ -10,9 +10,5 @@ class BookSearch(ABC):
         pass
         
     @abstractmethod
-    def search_by_genre(self, genre):
-        pass
-        
-    @abstractmethod
     def search_by_isbn(self, isbn):
         pass
