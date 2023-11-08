@@ -1,9 +1,9 @@
-from src.db_manager import DBManager
+from models.database_manager.db_manager import DBManager
 
 class LendingManager:
-    def __init__(self, library_member):
+    def __init__(self, library_member=None):
         self.db_manager = DBManager()
-        self.user = library_member
+        # self.user = library_member
         
     def get_borrowed_books(self):
         pass

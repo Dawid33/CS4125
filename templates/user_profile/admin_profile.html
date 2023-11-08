@@ -29,61 +29,43 @@
                         </ul>
                     </div>
                 </div>
-                
-                <div class="card mb-4">
-                    <div class="d-flex justify-content-between align-items-center card-header bg-danger text-white font-weight-bold">
-                        <span>Fines</span>
-                        <button class="btn btn-warning ml-2" onclick="waive_fine()">Waive Fines</button>
+
+                <div class="card bg-danger text-white">
+                    <div class="card-header font-weight-bold">
+                        Admin Functionality
                     </div>
                     <div class="card-body">
-                        <table class="table table-no-border">
-                            <thead>
-                                <tr>
-                                    <th>Total Fines Owed:</th>
-                                    <th class="font-weight-normal">0</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-danger">
+                                <button class="btn btn-warning" onclick="block_user()">Block Users</button>
+                            </li>
+                            <li class="list-group-item bg-danger">
+                                <button class="btn btn-primary" onclick="unblock_user()">Unblock Users</button>
+                            </li>
+                            <li class="list-group-item bg-danger">
+                                <button class="btn btn-success" onclick="waive_user_fine()">Waive User Fine</button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card">
+                <div class="card mb-4 bg-light">
                     <div class="card-header font-weight-bold">
-                        Blocked Users
-                        <button class="btn btn-danger ml-2" onclick="block_library_member()">Block Users</button>
-                        <button class="btn btn-primary ml-2" onclick="unblock_library_member()">Unblock Users</button>
+                        <span>Catalogue Manager</span>
                     </div>
                     <div class="card-body">
-                        <table class="table table-no-border">
-                            <thead>
-                                <tr>
-                                    <th>Total Blocked Users:</th>
-                                    <th class="font-weight-normal">0</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="card mt-4">
-                    <div class="d-flex justify-content-between align-items-center card-header font-weight-bold">
-                        <span>Overdue Books</span>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-no-border">
-                            <thead>
-                                <tr>
-                                    <th>User Name</th>
-                                    <th>Book Overdue</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>User Name</td>
-                                    <td>Book Due</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-light">
+                                <button class="btn btn-success" onclick="add_book()">Add Book</button>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <button class="btn btn-primary" onclick="add_book_item()">Add Book Copy</button>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <button class="btn btn-danger" onclick="remove_book()">Remove Book</button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
