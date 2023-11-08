@@ -1,13 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from models.database_manager.db_manager import DBManager
-from models.users.user_controller import UserController
 from flask import g
 
 
 auth = Blueprint('authentication', __name__)
 
 db_manager = DBManager()
-user_controller = UserController()
 
 # API call that communicates with the database to register a user
 @auth.route('/register', methods=['GET', 'POST'])
@@ -36,7 +34,6 @@ def register():
 # API call that logs in the user and creates a session
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    global current_user  # Access the global current_user variable
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -44,9 +41,10 @@ def login():
         user = db_manager.get_user_by_username(username)
         if user:
             if user.password == password:
-                session['user_id'] = user.user_id
+                # session['user_id'] = user.user_id
                 # current_user = user_controller.create_user(user.user_id, user.username, user.email, user.password, user.user_type)
-                # session['user'] = current_user
+                # session['user'] = json.dumps(current_user.to_dict())
+                session['user'] = user.user_id
                 return redirect(url_for('authentication.home'))
             else:
                 flash('Login failed. Password is incorrect')
@@ -58,8 +56,8 @@ def login():
 # API call that logs out the user and deletes session
 @auth.route('/logout', methods=['GET'])
 def logout():     
-    if 'user_id' in session:
-        del session['user_id']
+    if 'user' in session:
+        del session['user']
     else:
         flash('Already logged out')
     return redirect(url_for('authentication.login'))
@@ -67,7 +65,7 @@ def logout():
 #API call that loads the home page when a user logs in successfuly
 @auth.route('/', methods=['GET', 'POST'])
 def home():
-    if 'user_id' in session:
+    if 'user' in session:
         return render_template("home/home.html")  
     else:
         return redirect(url_for('authentication.login'))

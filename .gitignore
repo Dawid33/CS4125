@@ -3,5 +3,6 @@
 .vscode
 venv
 sqlite.db
+scripts
 
 

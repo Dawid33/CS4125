@@ -8,9 +8,14 @@ class Admin(User):
     def __init__(self, user_id, username, email, password):
         super().__init__(user_id, username, email, password)
         self.catalogue_manager = Catalogue()
+        self.user_type = 'ADMIN'
+    
+    def get_user_type(self):
+        return self.user_type
     
     def block_library_member(self, user):
         block = DBManager.block_user(self, user)
+        pass
     
     def unblock_library_member(self, user):
         pass

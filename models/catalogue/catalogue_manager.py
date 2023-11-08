@@ -13,12 +13,8 @@ class Catalogue(BookSearch):
         # Implement search by author using the database manager
         pass
 
-    def search_by_genre(self, genre):
+    def search_by_isbn(self, genre):
         # Implement search by genre using the database manager
-        pass
-
-    def search_by_year(self, year):
-        # Implement search by year using the database manager
         pass
     
     def update_book(self, title, author):
