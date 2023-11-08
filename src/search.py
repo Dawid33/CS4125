@@ -19,7 +19,7 @@ def search_books():
      if title or author or isbn:
           books = db_manager.filter_books(title=title, author=author, isbn=isbn)
      else:
-          books = db_manager.get_default_catalog()
+          books = 0
 
      # Render the template with the filtered books
      return render_template('search/search.html', books=books)

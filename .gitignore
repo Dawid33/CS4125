@@ -3,6 +3,6 @@
 .vscode
 venv
 sqlite.db
-scripts
+scripts/dawid
 
 

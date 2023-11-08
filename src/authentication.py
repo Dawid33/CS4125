@@ -44,8 +44,11 @@ def login():
                 # session['user_id'] = user.user_id
                 # current_user = user_controller.create_user(user.user_id, user.username, user.email, user.password, user.user_type)
                 # session['user'] = json.dumps(current_user.to_dict())
-                session['user'] = user.user_id
-                return redirect(url_for('authentication.home'))
+                if user.is_blocked:
+                    flash('This account has been blocked')
+                else:    
+                    session['user'] = user.user_id
+                    return redirect(url_for('authentication.home'))
             else:
                 flash('Login failed. Password is incorrect')
         else:

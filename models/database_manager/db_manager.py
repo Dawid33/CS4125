@@ -3,7 +3,6 @@ from sqlalchemy import select
 from instance.db import *
 import uuid
 
-
 class DBManager:
     # Function to add a user to db
     def create_user(self, username, email, password, user_type):
@@ -82,6 +81,12 @@ class DBManager:
     
     # Method for blocking a user
     def block_user(self, user_id):
-        user = User.query.filter_by(user_id=user_id).first()
+        user = self.get_user_by_id(user_id)
+        setattr(user, 'is_blocked', 1)
+        db.session.commit()
+        
+    #Method for unblocking user    
+    def unblock_user(self, user_id):
+        user = self.get_user_by_id(user_id)
         setattr(user, 'is_blocked', 0)
         db.session.commit()

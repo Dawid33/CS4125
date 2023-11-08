@@ -7,18 +7,19 @@ from models.database_manager.db_manager import DBManager
 class Admin(User):
     def __init__(self, user_id, username, email, password):
         super().__init__(user_id, username, email, password)
+        
         self.catalogue_manager = Catalogue()
+        self.db_manager = DBManager()
         self.user_type = 'ADMIN'
     
     def get_user_type(self):
         return self.user_type
     
     def block_library_member(self, user):
-        block = DBManager.block_user(self, user)
-        pass
+        self.db_manager.block_user(user)
     
     def unblock_library_member(self, user):
-        pass
+        self.db_manager.unblock_user(user)
     
     def waive_fine(self, user, fine_id):
         pass
