@@ -64,24 +64,36 @@
                     </div>
                 </div>
                 <div class="card mt-4">
-                    <div class="d-flex justify-content-between align-items-center card-header font-weight-bold">
-                        <span>Borrowed Books</span>
-                        <button class="btn btn-primary ml-2" onclick="returnBook()">Return Book</button>
+                    <div class="card-header font-weight-bold">
+                        Borrowed Books: {{user.get_borrowed_books() | length}}
                     </div>
                     <div class="card-body">
                         <table class="table table-no-border">
+                            {% if user.get_borrowed_books() %}
                             <thead>
                                 <tr>
                                     <th>Book Title</th>
-                                    <th>Due Date</th>
+                                    <th>Author</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                                <tbody>
+                                    {% for book, borrow_id in user.get_borrowed_books() %}
+                                    <tr>
+                                        <td>{{ book.title }}</td>
+                                        <td>{{ book.author }}</td>
+                                        <td>
+                                            <a href="/return_book/{{ borrow_id }}"><button class="btn btn-sm btn-primary" onclick="returnBook()">Return Book</button></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            {% else %}
+                            <thead>
                                 <tr>
-                                    <td>book title</td>
-                                    <td>book due date</td>
+                                    <th>No Books Borrowed</th>
                                 </tr>
-                            </tbody>
+                            </thead>
+                            {% endif %}
                         </table>
                     </div>
                 </div>

@@ -77,7 +77,28 @@ class DBManager:
         db.session.add(borrowed)
         db.session.commit()
         return True
+    
+    def get_borrowed_books(self, user_id):
+        borrowed_books = (
+            db.session.query(Book, BorrowedBook.borrow_id)
+            .join(BookItem, BookItem.book_id == Book.book_id)
+            .join(BorrowedBook, BorrowedBook.book_item_id == BookItem.book_item_id)
+            .filter(BorrowedBook.user_id == user_id)
+            .all()
+        )
+        return borrowed_books
+    
+    def return_book(self, borrow_id):
+        borrowed_book = BorrowedBook.query.filter_by(borrow_id=str(borrow_id)).first()
+        book_item = BookItem.query.filter_by(book_item_id=borrowed_book.book_item_id).first()
+        
+        # Update is_borrowed field to 0 in the BookItem table
+        setattr(book_item, 'is_borrowed', 0)
+        db.session.commit()
 
+        # Delete the corresponding row from the BorrowedBook table
+        db.session.delete(borrowed_book)
+        db.session.commit()
 
     def get_default_catalog(self):
         return db.session.execute(select(Book)).all()
@@ -108,6 +129,7 @@ class DBManager:
 
         # Execute the query and return the results
         return query.all()
+    
     
     # Method for blocking a user
     def block_user(self, user_id):

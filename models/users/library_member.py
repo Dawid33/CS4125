@@ -19,10 +19,10 @@ class LibraryMember(User, ABC):
         pass
   
     def get_borrowed_books(self):
-        pass
+        return self.lending_manager.get_borrowed_books(self.user_id)
     
-    def return_book(self, book):
-        pass
+    def return_book(self, borrow_id):
+        self.lending_manager.return_book(borrow_id)
 
     @abstractmethod
     def borrow_book(self, book_item):

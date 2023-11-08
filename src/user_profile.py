@@ -14,7 +14,7 @@ def user_profile():
     
     if current_user.get_user_type() == "ADMIN":
         return redirect(url_for('profile.admin_profile'))
-    else:      
+    else:
         return render_template('user_profile/user_profile.html', user=current_user)
 
 @profile.route('/admin_profile', methods=['GET', 'POST'])
@@ -26,3 +26,10 @@ def admin_profile():
 def fines():
     current_user = user_manager.get_current_user()
     return render_template('user_profile/fines.html', user=current_user)
+
+@profile.route('/return_book/<uuid:borrow_id>', methods=['GET','POST'])
+def return_book(borrow_id):
+    current_user = user_manager.get_current_user()
+    current_user.return_book(borrow_id)
+    
+    return redirect(url_for('profile.user_profile'))
