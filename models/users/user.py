@@ -20,9 +20,9 @@ class User():
     def __str__(self):
         return f"User Details( Id: {self.user_id}, Username: {self.username}, Email: {self.email} )"
 
-    @json.encoder
-    def encoder(o):
-        if isinstance(o, User):
-            return "user" 
+    # @json.encoder
+    # def encoder(o):
+    #     if isinstance(o, User):
+    #         return "user" 
 
     

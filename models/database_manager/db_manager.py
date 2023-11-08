@@ -80,8 +80,3 @@ class DBManager:
 
         # Execute the query and return the results
         return query.all()
-    
-    # Query the database to get a users admin id
-    def get_admin_id(self, is_admin):
-        user = User.query.filter_by(is_admin=is_admin).first()
-        return user

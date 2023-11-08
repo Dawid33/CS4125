@@ -44,10 +44,9 @@ def login():
         user = db_manager.get_user_by_username(username)
         if user:
             if user.password == password:
-                # session['user_id'] = user.user_id
-                current_user = user_controller.create_user(user.user_id, user.username, user.email, user.password, user.user_type)
-                print(current_user)
-                session['user_id'] = current_user
+                session['user_id'] = user.user_id
+                # current_user = user_controller.create_user(user.user_id, user.username, user.email, user.password, user.user_type)
+                # session['user'] = current_user
                 return redirect(url_for('authentication.home'))
             else:
                 flash('Login failed. Password is incorrect')
