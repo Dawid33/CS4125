@@ -41,7 +41,7 @@
         async function borrow_book() {
           const response = await fetch("{{ url_for('book.borrow', book_id=book_id) }}");
           const text = await response.json();
-          console.log(text);
+          window.location.reload(true)
         }
       </script>
       <button id="return-button" class="btn btn-primary" onclick="borrow_book()">Borrow Book</button>
