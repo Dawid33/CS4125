@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from models.database_manager.db_manager import DBManager
+from models.catalogue.catalogue_manager import Catalogue
 
 search = Blueprint('search', __name__)
 
-db_manager = DBManager()
+catalogue = Catalogue()
 
 
 @search.route('/search', methods=['GET'])
@@ -11,15 +11,15 @@ def search_books():
      
      """Allows a User to query the db for a book based on title, author and isbn"""
      # Get query parameters
-     title = request.args.get('title', '').strip()
-     author = request.args.get('author', '').strip()
-     isbn = request.args.get('isbn', '').strip()
+     title = request.args.get('title', '').strip().lower()
+     author = request.args.get('author', '').strip().lower()
+     isbn = request.args.get('isbn', '').strip().lower()
+     
+     books = 0
 
      # Use the parameters to filter the book search
      if title or author or isbn:
-          books = db_manager.filter_books(title=title, author=author, isbn=isbn)
-     else:
-          books = 0
+          books = catalogue.filter_books(title, author, isbn)
 
      # Render the template with the filtered books
      return render_template('search/search.html', books=books)

@@ -65,6 +65,7 @@ class DBManager:
         db.session.add(book_item)
         db.session.commit()
 
+    # Function to add book to the borrowed books table and link with user table
     def insert_borrowed_book(self, user_id, book_item):
         book_item.is_borrowed = True
         borrowed = BorrowedBook(
@@ -78,6 +79,7 @@ class DBManager:
         db.session.commit()
         return True
     
+    # Function that returns all borrowed books by a user
     def get_borrowed_books(self, user_id):
         borrowed_books = (
             db.session.query(Book, BorrowedBook.borrow_id)
@@ -88,6 +90,7 @@ class DBManager:
         )
         return borrowed_books
     
+    # Function that returns a book copy after a user return a book
     def return_book(self, borrow_id):
         borrowed_book = BorrowedBook.query.filter_by(borrow_id=str(borrow_id)).first()
         book_item = BookItem.query.filter_by(book_item_id=borrowed_book.book_item_id).first()
@@ -100,14 +103,17 @@ class DBManager:
         db.session.delete(borrowed_book)
         db.session.commit()
 
+    # Retrieves default catalogue
     def get_default_catalog(self):
         return db.session.execute(select(Book)).all()
 
+    # Retrieves all books with specified titile
     def search_by_title(self, title):
         search = "%{}%".format(title)
         books = Book.query.filter(Book.title.like(search)).all()
         return books
 
+    # Retrieves all books with the specified title, author and isbn
     def filter_books(self, title, author, isbn):
         """Fetch books from the database with optional filters."""
         # Start with a query on the Book model
@@ -130,14 +136,13 @@ class DBManager:
         # Execute the query and return the results
         return query.all()
     
-    
-    # Method for blocking a user
+    # Function for blocking a user
     def block_user(self, user_id):
         user = self.get_user_by_id(user_id)
         setattr(user, 'is_blocked', 1)
         db.session.commit()
         
-    #Method for unblocking user    
+    # Function for unblocking user    
     def unblock_user(self, user_id):
         user = self.get_user_by_id(user_id)
         setattr(user, 'is_blocked', 0)

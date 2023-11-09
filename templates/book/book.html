@@ -11,7 +11,7 @@
   <div id='container'>
     {% block content %}
     <content>
-      <table>
+      <!-- <table>
         <tr>
           <td>
             <div id="title">Title
@@ -36,7 +36,13 @@
           </td>
           <td>: {{ available_copies }} / {{ total_copies }}</td>
         </tr>
-      </table>
+      </table> -->
+      <div>
+        <h4 id="title">{{ title }}</h4>
+        <h6 id="author">{{ author }}</h6>
+        <p id="copies">Available Copies: {{ available_copies }} / {{ total_copies }}</p>  
+      </div>
+      <button id="return-button" class="btn btn-primary" onclick="borrow_book()">Borrow Book</button>
       <script>
         async function borrow_book() {
           const response = await fetch("{{ url_for('book.borrow', book_id=book_id) }}");
@@ -44,7 +50,6 @@
           window.location.reload(true)
         }
       </script>
-      <button id="return-button" class="btn btn-primary" onclick="borrow_book()">Borrow Book</button>
     </content>
     {% endblock content %}
   </div>

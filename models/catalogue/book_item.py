@@ -1,4 +1,4 @@
-from src.catalogue.book import Book
+from models.catalogue.book import Book
 
 class BookItem(Book):
     def __init__(self, book_id, ISBN, author, title, publisher, publication_date, num_pages, book_item_id, is_borrowed=False, due_date=None):

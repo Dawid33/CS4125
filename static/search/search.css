@@ -78,8 +78,8 @@ hr {
 }
 
 .author {
-  color: grey;
-  font-size: small;
+  color: rgb(66, 66, 66);
+  font-size: medium;
 }
 
 .isbn {

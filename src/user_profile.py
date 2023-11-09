@@ -5,6 +5,7 @@ user_manager = UserManager()
 
 profile = Blueprint('profile', __name__)
 
+# API endpoint that loads the initial user profile page and passes in a user object
 @profile.route('/profile', methods=['GET', 'POST'])
 def user_profile():
     if 'user' not in session:
@@ -17,17 +18,20 @@ def user_profile():
     else:
         return render_template('user_profile/user_profile.html', user=current_user)
 
+# API endpoint that loads the admin profile page
 @profile.route('/admin_profile', methods=['GET', 'POST'])
 def admin_profile():
     current_user = user_manager.get_current_user()
     return render_template('user_profile/admin_profile.html', user=current_user)
 
+# API endpoint that loads the fines page and passes in a user object
 @profile.route('/fines', methods=['GET', 'POST'])
 def fines():
     current_user = user_manager.get_current_user()
     return render_template('user_profile/fines.html', user=current_user)
 
-@profile.route('/return_book/<uuid:borrow_id>', methods=['GET','POST'])
+# API endpoint that triggeres return book on the user object
+@profile.route('/return_book/<uuid:borrow_id>', methods=['GET'])
 def return_book(borrow_id):
     current_user = user_manager.get_current_user()
     current_user.return_book(borrow_id)

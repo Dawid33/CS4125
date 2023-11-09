@@ -6,8 +6,17 @@ from models.lend_withdraw.lending_manager import LendingManager
 class LibraryMember(User, ABC):
     def __init__(self, user_id, username, email, password, fine_amount=0):
         super().__init__(user_id, username, email, password)
+        
         self.fine_amount = fine_amount
         self.lending_manager = LendingManager()
+    
+    # Gets all borrowed books by library member    
+    def get_borrowed_books(self):
+        return self.lending_manager.get_borrowed_books(self.user_id)
+    
+    # Returns selected book back to the library  
+    def return_book(self, borrow_id):
+        self.lending_manager.return_book(borrow_id)
         
     def set_fine_amount(self, amount):
         pass
@@ -17,12 +26,6 @@ class LibraryMember(User, ABC):
 
     def pay_fine(self, fine_id):
         pass
-  
-    def get_borrowed_books(self):
-        return self.lending_manager.get_borrowed_books(self.user_id)
-    
-    def return_book(self, borrow_id):
-        self.lending_manager.return_book(borrow_id)
 
     @abstractmethod
     def borrow_book(self, book_item):
@@ -36,9 +39,11 @@ class Student(LibraryMember):
         self.user_type = user_type
         self.book_limit = 5  # Define the book limit for students.
 
+    # Gets type for this user
     def get_user_type(self):
         return self.user_type
 
+    # Gets the book limit for this user
     def get_book_limit(self):
         return self.book_limit
     
@@ -53,9 +58,11 @@ class Faculty(LibraryMember):
         self.user_type = user_type
         self.book_limit = 10  # Define the book limit for faculty members.
 
+    # Gets type for this user
     def get_user_type(self):
         return self.user_type
 
+    # Gets the book limit for this user
     def get_book_limit(self):
         return self.book_limit
     
