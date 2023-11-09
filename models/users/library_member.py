@@ -36,6 +36,7 @@ class LibraryMember(User, ABC):
 class Student(LibraryMember):
     def __init__(self, user_id, username, email, password, user_type="Student"):
         super().__init__(user_id, username, email, password)
+        
         self.user_type = user_type
         self.book_limit = 5  # Define the book limit for students.
 
@@ -55,6 +56,7 @@ class Student(LibraryMember):
 class Faculty(LibraryMember):
     def __init__(self, user_id, username, email, password, user_type="Faculty"):
         super().__init__(user_id, username, email, password)
+        
         self.user_type = user_type
         self.book_limit = 10  # Define the book limit for faculty members.
 

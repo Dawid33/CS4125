@@ -10,7 +10,7 @@
     <div class="container">
         <h3>{{ user.username.capitalize() }}'s User Profile</h3>
         <div class="row mt-4">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card mb-4">
                     <div class="card-header font-weight-bold">
                         User Details
@@ -25,6 +25,9 @@
                             </li>
                             <li class="list-group-item">
                                 {{ user.user_type.capitalize() }}
+                            </li>
+                            <li class="list-group-item">
+                                Max Books Allowed: {{ user.get_book_limit() }}
                             </li>
                         </ul>
                     </div>
@@ -47,23 +50,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="card">
-                    <div class="card-header font-weight-bold">
-                        User Limits
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-no-border">
-                            <thead>
-                                <tr>
-                                    <th>Max Books Allowed:</th>
-                                    <th class="font-weight-normal">{{ user.get_book_limit() }}</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="card mt-4">
                     <div class="card-header font-weight-bold">
                         Borrowed Books: {{user.get_borrowed_books() | length}}
                     </div>

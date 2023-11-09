@@ -49,7 +49,7 @@ class DBManager:
             author=author,
             publisher='lol',
             num_of_pages='lol',
-            pub_date='your mom'
+            pub_date='lol'
         )
         db.session.add(book)
         db.session.commit()
