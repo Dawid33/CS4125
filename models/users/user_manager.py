@@ -9,4 +9,4 @@ class UserManager():
        
     def get_current_user(self):
         db_user = self.db_manager.get_user_by_id(session['user'])
-        return self.user_factory.create_user(db_user.user_id, db_user.username, db_user.email, db_user.password, db_user.user_type)
+        return self.user_factory.create_user(db_user.user_id, db_user.username, db_user.email, db_user.password, db_user.user_type, db_user.balance)

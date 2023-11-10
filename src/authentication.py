@@ -41,9 +41,6 @@ def login():
         user = db_manager.get_user_by_username(username)
         if user:
             if user.password == password:
-                # session['user_id'] = user.user_id
-                # current_user = user_controller.create_user(user.user_id, user.username, user.email, user.password, user.user_type)
-                # session['user'] = json.dumps(current_user.to_dict())
                 if user.is_blocked:
                     flash('This account has been blocked')
                 else:    

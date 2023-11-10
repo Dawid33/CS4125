@@ -136,6 +136,20 @@ class DBManager:
         # Execute the query and return the results
         return query.all()
     
+    # Function that gets all user fines
+    def get_user_fines(self, user_id):
+        fines = Fine.query.filter_by(user_id=user_id).all()
+        return fines
+    
+    def pay_fine(self, fine_id, new_balance):
+        fine_to_delete = Fine.query.filter_by(fine_id=str(fine_id)).one()
+        user = User.query.filter_by(user_id=fine_to_delete.user_id).one()
+        
+        db.session.delete(fine_to_delete)
+        setattr(user, 'balance', new_balance)
+        
+        db.session.commit()
+    
     # Function for blocking a user
     def block_user(self, user_id):
         user = self.get_user_by_id(user_id)

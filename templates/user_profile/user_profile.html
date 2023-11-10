@@ -29,23 +29,50 @@
                             <li class="list-group-item">
                                 Max Books Allowed: {{ user.get_book_limit() }}
                             </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Current Balance: €{{ user.get_balance() }}
+                                <a href="/top_up"><button class="btn btn-sm btn-info">Top Up</button></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 
                 <div class="card mb-4">
-                    <div class="d-flex justify-content-between align-items-center card-header bg-danger text-white font-weight-bold">
+                    <div class="card-header bg-danger text-white font-weight-bold">
                         <span>Fines</span>
-                        <a href="/fines"><button class="btn btn-success ml-2">Pay Fines</button></a>
                     </div>
                     <div class="card-body">
                         <table class="table table-no-border">
+                            {% if user.get_user_fines() %}
                             <thead>
                                 <tr>
-                                    <th>Fine Amount:</th>
-                                    <th class="font-weight-normal">{{ user.get_fine_amount() }}</th>
+                                    <th>Reason</th>
+                                    <th class="font-weight-normal">Amount</th>
                                 </tr>
                             </thead>
+                                <tbody>
+                                    {% for fine in user.get_user_fines() %}
+                                    <tr>
+                                        <td>{{ fine.description }}</td>
+                                        <td>€{{ fine.fine_amount }}</td>
+                                        <td>
+                                            <a href="/pay_fine/{{ fine.fine_id }}"><button class="btn btn-sm btn-success">Pay</button></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td><b>Total:</b></td>
+                                        <td><b>€{{ user.get_fine_amount() }}</b></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            {% else %}
+                            <thead>
+                                <tr>
+                                    <th>No Pending Fines</th>
+                                </tr>
+                            </thead> 
+                            {% endif %}
                         </table>
                     </div>
                 </div>
@@ -70,7 +97,7 @@
                                         <td>{{ book.title }}</td>
                                         <td>{{ book.author }}</td>
                                         <td>
-                                            <a href="/return_book/{{ borrow_id }}"><button class="btn btn-sm btn-primary" onclick="returnBook()">Return Book</button></a>
+                                            <a href="/return_book/{{ borrow_id }}"><button class="btn btn-sm btn-primary">Return Book</button></a>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -89,5 +116,4 @@
         </div>
     </div>
 </div>
-
 {% endblock main %}
