@@ -25,6 +25,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     user_type = db.Column(db.String, nullable=False)
     is_blocked = db.Column(db.Boolean)
+    balance = db.Column(db.Float, default=0)
 
 class BorrowedBook(db.Model):
     borrow_id = db.Column(db.String, primary_key=True)
