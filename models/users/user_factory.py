@@ -13,7 +13,3 @@ class UserFactory:
             return Admin(user_id, username, email, password)
         else:
             raise ValueError("Invalid user type")
-    
-
-    
-    
