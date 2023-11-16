@@ -31,7 +31,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Current Balance: €{{ user.get_balance() }}
-                                <a href="/top_up"><button class="btn btn-sm btn-info">Top Up</button></a>
+                                <a href="/add_to_balance"><button class="btn btn-sm btn-info">Top Up</button></a>
                             </li>
                         </ul>
                     </div>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-no-border">
-                            {% if user.get_user_fines() %}
+                            {% if user.get_fines() %}
                             <thead>
                                 <tr>
                                     <th>Reason</th>
@@ -51,7 +51,7 @@
                                 </tr>
                             </thead>
                                 <tbody>
-                                    {% for fine in user.get_user_fines() %}
+                                    {% for fine in user.get_fines() %}
                                     <tr>
                                         <td>{{ fine.description }}</td>
                                         <td>€{{ fine.fine_amount }}</td>

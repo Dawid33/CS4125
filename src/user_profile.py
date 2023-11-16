@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, session, url_for
+from flask import Blueprint, redirect, render_template, request, session, url_for
 from models.users.user_manager import UserManager
 
 user_manager = UserManager()
@@ -33,10 +33,15 @@ def return_book(borrow_id):
     return redirect(url_for('profile.user_profile'))
 
 # API endpoint that triggers the top up fuctionality
-@profile.route('/top_up', methods=['GET', 'POST'])
-def top_up_balance():
+@profile.route('/add_to_balance', methods=['GET', 'POST'])
+def add_to_balance():
     current_user = user_manager.get_current_user()
-    return render_template('user_profile/top_up.html', user=current_user)
+    if request.method == 'POST':
+        amount = request.form.get('amount')
+        current_user.set_balance(float(amount))
+        return redirect(url_for('profile.user_profile'))
+    else:
+        return render_template('user_profile/top_up_page.html', user=current_user)
 
 # API endpoint that pays fine
 @profile.route('/pay_fine/<uuid:fine_id>', methods=['GET', 'POST'])
@@ -46,14 +51,7 @@ def pay_fine(fine_id):
     if(current_user.pay_fine(fine_id)):
         return redirect(url_for('profile.user_profile'))
     else:
-        return redirect(url_for('profile.top_up_balance'))
-    
-
-# # API endpoint that loads the fines page and passes in a user object
-# @profile.route('/fines', methods=['GET', 'POST'])
-# def fines():
-#     current_user = user_manager.get_current_user()
-#     return render_template('user_profile/fines.html', user=current_user)
+        return redirect(url_for('profile.add_to_balance'))
 
 
 

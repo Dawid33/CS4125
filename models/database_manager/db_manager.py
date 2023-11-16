@@ -66,14 +66,15 @@ class DBManager:
         db.session.commit()
 
     # Function to add book to the borrowed books table and link with user table
-    def insert_borrowed_book(self, user_id, book_item):
+    def insert_borrowed_book(self, user_id, book_item, borrow_date, due_date):
         book_item.is_borrowed = True
+        book_item.due_date = due_date
         borrowed = BorrowedBook(
             borrow_id=str(uuid.uuid4()),
             user_id=str(user_id),
             book_item_id=str(book_item.book_item_id),
-            borrow_date="When I was there",
-            return_date="Third orbit of Saturn since the reign of Xi",
+            borrow_date=borrow_date,
+            return_date=due_date,
         )
         db.session.add(borrowed)
         db.session.commit()
@@ -97,6 +98,7 @@ class DBManager:
         
         # Update is_borrowed field to 0 in the BookItem table
         setattr(book_item, 'is_borrowed', 0)
+        setattr(book_item, 'due_date', None)
         db.session.commit()
 
         # Delete the corresponding row from the BorrowedBook table
@@ -137,10 +139,11 @@ class DBManager:
         return query.all()
     
     # Function that gets all user fines
-    def get_user_fines(self, user_id):
+    def get_fines(self, user_id):
         fines = Fine.query.filter_by(user_id=user_id).all()
         return fines
     
+    # Pays a single fine and resets the balance
     def pay_fine(self, fine_id, new_balance):
         fine_to_delete = Fine.query.filter_by(fine_id=str(fine_id)).one()
         user = User.query.filter_by(user_id=fine_to_delete.user_id).one()
@@ -149,6 +152,13 @@ class DBManager:
         setattr(user, 'balance', new_balance)
         
         db.session.commit()
+    
+    # Sets a new balance    
+    def set_balance(self, user_id, new_balance):
+        user = User.query.filter_by(user_id=user_id).one()
+        setattr(user, 'balance', new_balance)
+        db.session.commit()
+
     
     # Function for blocking a user
     def block_user(self, user_id):
