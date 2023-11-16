@@ -7,7 +7,7 @@ from instance.db import *
 # Extends the User class
 class Admin(User):
     def __init__(self, user_id, username, email, password):
-        super().__init__(user_id, username, email, password)
+        super().__init__(user_id=user_id, username=username, email=email, password=password)
 
         self.catalogue_manager = Catalogue()
         self.db_manager = DBManager()

@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, redirect, render_template, session, url_for
+from flask import Blueprint, redirect, render_template, session, url_for
 from models.users.user_manager import UserManager
 
 user_manager = UserManager()
