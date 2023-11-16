@@ -149,7 +149,7 @@ class DBManager:
         setattr(user, 'balance', new_balance)
         
         db.session.commit()
-    
+        
     # Function for blocking a user
     def block_user(self, user_id):
         user = self.get_user_by_id(user_id)

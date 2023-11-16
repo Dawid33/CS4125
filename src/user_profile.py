@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, session, url_for
+from flask import Flask, Blueprint, redirect, render_template, session, url_for
 from models.users.user_manager import UserManager
 
 user_manager = UserManager()
@@ -54,7 +54,3 @@ def pay_fine(fine_id):
 # def fines():
 #     current_user = user_manager.get_current_user()
 #     return render_template('user_profile/fines.html', user=current_user)
-
-
-
-
