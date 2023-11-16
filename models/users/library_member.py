@@ -90,4 +90,7 @@ class Faculty(LibraryMember):
     def borrow_book(self, book_item):
         pass
 
+    def change_state(self, state):
+        self.state = state
+
 

@@ -54,7 +54,3 @@ def pay_fine(fine_id):
 # def fines():
 #     current_user = user_manager.get_current_user()
 #     return render_template('user_profile/fines.html', user=current_user)
-
-
-
-
