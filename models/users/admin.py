@@ -26,7 +26,7 @@ class Admin(User):
         db.session.commit()
     
     
-    def unblock_library_member(self, user):
+    def unblock_library_member(self, user_id):
         block = User.query.filter_by(user_id=user_id).first()
 
         if not block:
