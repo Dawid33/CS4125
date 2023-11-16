@@ -9,7 +9,7 @@ class LibraryMember(User, ABC):
         
         self.lending_manager = LendingManager()
         self.fine_amount =self.lending_manager.calculate_total_fine(self.user_id)
-        self.fines = self.lending_manager.get_user_fines(self.user_id)
+        self.fines = self.lending_manager.get_fines(self.user_id)
     
     # Gets all borrowed books by library member    
     def get_borrowed_books(self):
@@ -24,16 +24,21 @@ class LibraryMember(User, ABC):
         return self.fine_amount
     
     # Gets all fines that the user owes
-    def get_user_fines(self):
+    def get_fines(self):
         return self.fines
-    
+        
+    # Gets user balance
     def get_balance(self):
         return self.balance
+
+    # Sets new user balance
+    def set_balance(self, new_balance):
+        self.lending_manager.set_balance(self.user_id, self.get_balance() + new_balance)
 
     def pay_fine(self, fine_id):
         # Find the fine that corresponds to the fine id
         fine = None
-        for fine_obj in self.get_user_fines():
+        for fine_obj in self.get_fines():
             if fine_obj.fine_id == str(fine_id):
                 fine = fine_obj
                 break

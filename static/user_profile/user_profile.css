@@ -5,3 +5,11 @@ table.table-no-border thead th {
 .card {
     border-color: gray;
 }
+
+.custom-input {
+    width: 20%;
+}
+
+.custom-button {
+    width: 20%;
+}

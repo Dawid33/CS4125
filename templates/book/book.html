@@ -11,49 +11,31 @@
   <div id='container'>
     {% block content %}
     <content>
-      <!-- <table>
-        <tr>
-          <td>
-            <div id="title">Title
-              <hr />
-            </div>
-          </td>
-          <td>: {{ title }}</td>
-        </tr>
-        <tr>
-          <td>
-            <div id="author">Author
-              <hr />
-            </div>
-          </td>
-          <td>: {{ author }}</td>
-        </tr>
-        <tr>
-          <td>
-            <div id="copies">Available Copies
-              <hr />
-            </div>
-          </td>
-          <td>: {{ available_copies }} / {{ total_copies }}</td>
-        </tr>
-      </table> -->
       <div>
         <h4 id="title">{{ title }}</h4>
         <h6 id="author">{{ author }}</h6>
         <p id="copies">Available Copies: {{ available_copies }} / {{ total_copies }}</p>  
       </div>
-      {% if available_copies %}
-        <button id="return-button" class="btn btn-primary" onclick="borrow_book()">Borrow Book</button>
+      {% if not book_limit_reached %}
+        {% if not already_borrowed %}
+          {% if available_copies %}
+            <button id="return-button" class="btn btn-primary" onclick="borrow_book()">Borrow Book</button>
+          {% else %}
+            <button id="reserve-button" class="btn btn-info" onclick="reserve_book()">Reserve Book</button>
+          {% endif %}
+        {% else %}
+          <a class="text-danger" href="/profile">You already have a copy of this book</a>
+        {% endif %}
       {% else %}
-        <button id="reserve-button" class="btn btn-info" onclick="reserve_book()">Reserve Book</button>
+        <a class="text-danger" href="/profile">Book limit of {{ book_limit }} was reached</a>
       {% endif %}
-      <script>
-        async function borrow_book() {
-          const response = await fetch("{{ url_for('book.borrow', book_id=book_id) }}");
-          const text = await response.json();
-          window.location.reload(true)
-        }
-      </script>
+        <script>
+          async function borrow_book() {
+            const response = await fetch("{{ url_for('book.borrow', book_id=book_id) }}");
+            const text = await response.json();
+            window.location.reload(true)
+          }
+        </script>
     </content>
     {% endblock content %}
   </div>
