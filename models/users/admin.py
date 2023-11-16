@@ -16,13 +16,25 @@ class Admin(User):
     def get_user_type(self):
         return self.user_type
     
-    def block_library_member(self, user):
-        block = DBManager.block_user(self, user)
-        return
+    def block_library_member(self, user_id):
+        block = User.query.filter_by(user_id=user_id).first()
+
+        if not block:
+            return "User cannot be blocked"
+        
+        setattr(block, 'is_blocked', 1)
+        db.session.commit()
     
     
     def unblock_library_member(self, user):
-        pass
+        block = User.query.filter_by(user_id=user_id).first()
+
+        if not block:
+            return "User cannot be unblocked"
+        
+        setattr(block, 'is_blocked', 0)
+        db.session.commit()
+    
     
     # Function for waving a specific user fine
     def waive_fine(self, user_id, fine_id):
