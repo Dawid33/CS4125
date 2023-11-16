@@ -152,14 +152,13 @@ class DBManager:
         setattr(user, 'balance', new_balance)
         
         db.session.commit()
-    
+            
     # Sets a new balance    
     def set_balance(self, user_id, new_balance):
         user = User.query.filter_by(user_id=user_id).one()
         setattr(user, 'balance', new_balance)
         db.session.commit()
 
-    
     # Function for blocking a user
     def block_user(self, user_id):
         user = self.get_user_by_id(user_id)

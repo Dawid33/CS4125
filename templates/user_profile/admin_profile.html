@@ -2,10 +2,114 @@
 
 {% block head_extra %}
 <link rel="stylesheet" href="{{ url_for('static', filename='user_profile/admin_profile.css') }}">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Profile</title>
 {% endblock head_extra %}
 
 {% block main %}
+<!-- Modal Stuff -->
+<div class="modal fade" id="longBlockUser" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Select a user to block</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="longWaiveUser" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Select a user fine to waive</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="longDeleteBook" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Select a book to remove</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="longAddBook" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Add a book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="longAddBookCopy" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Add a book copy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="jumbotron mt-4 mb-4" style="background-color: #e9ebe8;">
     <div class="container">
         <h3>{{ user.username.capitalize() }}'s Admin Profile</h3>
@@ -30,20 +134,20 @@
                     </div>
                 </div>
 
-                <div class="card bg-danger text-white">
-                    <div class="card-header font-weight-bold">
+                <div class="card text-white">
+                    <div class="card-header bg-danger font-weight-bold">
                         Admin Functionality
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-danger">
-                                <button class="btn btn-warning" onclick="block_user()">Block Users</button>
+                            <li class="list-group-item">
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#longBlockUser">Block Users</button>
                             </li>
-                            <li class="list-group-item bg-danger">
-                                <button class="btn btn-primary" onclick="unblock_user()">Unblock Users</button>
+                            <li class="list-group-item">
+                                <button type="button" class="btn btn-primary" onclick="unblock_user()">Unblock Users</button>
                             </li>
-                            <li class="list-group-item bg-danger">
-                                <button class="btn btn-success" onclick="waive_user_fine()">Waive User Fine</button>
+                            <li class="list-group-item">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#longWaiveUser">Waive User Fine</button>
                             </li>
                         </ul>
                     </div>
@@ -57,13 +161,13 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item bg-light">
-                                <button class="btn btn-success" onclick="add_book()">Add Book</button>
+                                <button class="btn btn-success" data-toggle="modal" data-target="#longAddBook" onclick="add_book()">Add Book</button>
                             </li>
                             <li class="list-group-item bg-light">
-                                <button class="btn btn-primary" onclick="add_book_item()">Add Book Copy</button>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#longAddBookCopy" onclick="add_book_item()">Add Book Copy</button>
                             </li>
                             <li class="list-group-item bg-light">
-                                <button class="btn btn-danger" onclick="remove_book()">Remove Book</button>
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#longDeleteBook" onclick="remove_book()">Remove Book</button>
                             </li>
                         </ul>
                     </div>
@@ -72,5 +176,4 @@
         </div>
     </div>
 </div>
-
 {% endblock main %}
