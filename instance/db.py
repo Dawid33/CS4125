@@ -15,7 +15,6 @@ class BookItem(db.Model):
     book_item_id = db.Column(db.String, primary_key=True)
     book_id = db.Column(db.String, db.ForeignKey('book.book_id'), nullable=False)
     is_borrowed = db.Column(db.Boolean, default=False)
-    due_date = db.Column(db.String)
 
 class User(db.Model):
     user_id = db.Column(db.String, primary_key=True)
@@ -32,7 +31,7 @@ class BorrowedBook(db.Model):
     user_id = db.Column(db.String, db.ForeignKey('user.user_id'), nullable=False)
     book_item_id = db.Column(db.String, db.ForeignKey('book_item.book_item_id'), nullable=False)
     borrow_date = db.Column(db.String, nullable=False)
-    return_date = db.Column(db.String)
+    due_date = db.Column(db.String)
 
 class Fine(db.Model):
     fine_id = db.Column(db.String, primary_key=True)
