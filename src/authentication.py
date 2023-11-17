@@ -1,11 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from models.database_manager.db_manager import DBManager
-from flask import g
-
+from models.auth_manager.auth_manager import Authentication
 
 auth = Blueprint('authentication', __name__)
 
-db_manager = DBManager()
+# Creates authentication manager objects that deals with user authentication
+auth_manager = Authentication()
 
 # API call that communicates with the database to register a user
 @auth.route('/register', methods=['GET', 'POST'])
@@ -15,19 +14,10 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
         user_type=request.form.get('role').upper()
-                    
-        existing_user = db_manager.get_user_by_username(username)
         
-        if existing_user:
-            flash('Username is already in use. Please choose a different one.')
-        else:
-            existing_email = db_manager.get_user_by_email(email)
-            if existing_email:
-                flash('Email is already registered. Please use a different email.')
-            else:
-                db_manager.create_user(username, email, password, user_type)
-                flash('Registration successful! You can now log in')
-                return redirect(url_for('authentication.login'))
+        # Function inside auth_manager that authenticates user registration         
+        if auth_manager.authenticate_registration(username, email, password, user_type):
+            return redirect(url_for('authentication.login'))
             
     return render_template('authentication/register.html')
   
@@ -38,18 +28,9 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         
-        user = db_manager.get_user_by_username(username)
-        if user:
-            if user.password == password:
-                if user.is_blocked:
-                    flash('This account has been blocked')
-                else:    
-                    session['user'] = user.user_id
-                    return redirect(url_for('authentication.home'))
-            else:
-                flash('Login failed. Password is incorrect')
-        else:
-            flash('Login failed, Username is incorrect')
+        # Function inside auth_manager that authenticates user login          
+        if auth_manager.authenticate_login(username, password):
+            return redirect(url_for('authentication.home'))
         
     return render_template('authentication/login.html')
 
@@ -62,7 +43,7 @@ def logout():
         flash('Already logged out')
     return redirect(url_for('authentication.login'))
 
-#API call that loads the home page when a user logs in successfuly
+# API call that loads the home page when a user logs in successfuly
 @auth.route('/', methods=['GET', 'POST'])
 def home():
     if 'user' in session:

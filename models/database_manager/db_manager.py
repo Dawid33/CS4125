@@ -68,13 +68,12 @@ class DBManager:
     # Function to add book to the borrowed books table and link with user table
     def insert_borrowed_book(self, user_id, book_item, borrow_date, due_date):
         book_item.is_borrowed = True
-        book_item.due_date = due_date
         borrowed = BorrowedBook(
             borrow_id=str(uuid.uuid4()),
             user_id=str(user_id),
             book_item_id=str(book_item.book_item_id),
             borrow_date=borrow_date,
-            return_date=due_date,
+            due_date=due_date,
         )
         db.session.add(borrowed)
         db.session.commit()
