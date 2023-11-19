@@ -1,3 +1,4 @@
+from flask import flash
 from models.users.user import User
 from models.catalogue.catalogue_manager import Catalogue
 from models.database_manager.db_manager import DBManager
@@ -41,13 +42,13 @@ class Admin(User):
         fine_to_waive = Fine.query.filter_by(user_id=user_id, fine_id=fine_id).first()
 
         if not fine_to_waive:
-            return "No Fine To Waive"
+            flash('There are no fines to waive.')
         
         db.session.delete(fine_to_waive)
 
         db.session.commit()
 
-        return "Fine Waived Successfully"
+        flash('User fine waived.')
 
 
 

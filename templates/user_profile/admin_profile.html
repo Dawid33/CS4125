@@ -80,24 +80,28 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addBookForm" method="post">
+                <form id="addBookForm" method="POST" action="{{url_for('profile.add_book')}}">
+                    <!-- For CSRF Token -->
+                    {{ form.hidden_tag() }}
                     <div class="form-group">
-                        <label for="add_author" class="col-md-6">Author: </label>
-                        <input type="text" class="form-control" id="book_author">
+                        {{ form.author.label(class="col-md-6") }}
+                        {{ form.author(class="form-control", id="book_author") }}
                     </div>
                     <div class="form-group">
-                        <label for="add_title" class="col-md-6">Title: </label>
-                        <input type="text" class="form-control" id="book_title">
+                        {{ form.title.label(class="col-md-6") }}
+                        {{ form.title(class="form-control", id="book_title") }}
                     </div>
                     <div class="form-group">
-                        <label for="add_isbn" class="col-md-6">ISBN: </label>
-                        <input type="text" class="form-control" id="book_isbn">
+                        {{ form.isbn.label(class="col-md-6") }}
+                        {{ form.isbn(class="form-control", id="book_isbn") }}
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+                <form>
+                    <button type="submit" id="saveButton" class="btn btn-success">Save Changes</button>
+                </form>
             </div>
         </div>
     </div>
