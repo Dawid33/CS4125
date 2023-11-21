@@ -100,7 +100,7 @@ class Faculty(LibraryMember):
     def get_book_limit(self):
         return self.book_limit
     
-    def borrow_book(self, book_item, borrow_date, due_date):
+    def borrow_book(self, book_item, borrow_date):
         # For Faculty the due date is always 2 weeks after borrow date
         due_date = borrow_date + timedelta(days=14)
                
