@@ -3,3 +3,4 @@ Flask==3.0.0
 SQLAlchemy
 Flask-SQLAlchemy
 Flask-JSON
+flask_wtf

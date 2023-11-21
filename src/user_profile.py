@@ -1,8 +1,6 @@
 from flask import Blueprint, redirect, render_template, session, url_for, abort
 from models.users.user_manager import UserManager
-from models.catalogue.book import Book
-from forms.book_form import AddBook
-from instance.db import db
+from src.forms import AddBook
 
 user_manager = UserManager()
 
@@ -26,13 +24,6 @@ def user_profile():
 def admin_profile():
     current_user = user_manager.get_current_user()
     form = AddBook()  # Create an instance of the form
-
-    if form.validate_on_submit():
-        # If the form is submitted and valid, process the form data
-        new_book_entry = Book(author=form.author.data, title=form.title.data, isbn=form.isbn.data)
-        db.session.add(new_book_entry)
-        db.session.commit()
-        return redirect(url_for('profile.admin_profile'))  # Redirect back to the admin profile
 
     # Pass the form to the template
     return render_template('user_profile/admin_profile.html', user=current_user, form=form)
@@ -63,18 +54,14 @@ def pay_fine(fine_id):
     
 @profile.route('/add_book', methods=['GET', 'POST'])
 def add_book():
-     form = AddBook()
-     user = user_manager.get_current_user()
+    add_book_form = AddBook()
+    admin_user = user_manager.get_current_user()
 
-     if not user.is_admin:
-          abort(403)
+    if add_book_form.validate_on_submit():
+        admin_user.insert_book(add_book_form.title.data, add_book_form.author.data)
 
-     if form.validate_on_submit():
-          new_book_entry = Book(author=form.author.data, title=form.title.data, isbn=form.isbn.data)
-          db.session.add(new_book_entry)
-          db.session.commit()
-          return redirect(url_for('admin_profile'))
-     return render_template('admin_profile.html', user=user, form=form)
+    return redirect(url_for('profile.admin_profile'))  # Redirect back to the admin profile
+
     
 
 # # API endpoint that loads the fines page and passes in a user object

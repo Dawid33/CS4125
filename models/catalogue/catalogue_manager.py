@@ -16,7 +16,7 @@ class Catalogue(BookSearch):
     def insert_book_item(self, book_id):
         self.db_manager.insert_book_item(book_id)
     
-    def remove_book(self, Book):
+    def remove_book(self, book_id):
         pass
     
     def search_by_title(self, title):

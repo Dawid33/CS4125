@@ -18,37 +18,35 @@ class Admin(User):
         return self.user_type
     
     def block_library_member(self, user_id):
-        block = User.query.filter_by(user_id=user_id).first()
-
-        if not block:
+        user_to_block = self.db_manager.get_user_by_id(user_id)
+        
+        if not user_to_block:
             return "User cannot be blocked"
         
-        setattr(block, 'is_blocked', 1)
-        db.session.commit()
-    
+        self.db_manager.block_user(user_id)
     
     def unblock_library_member(self, user_id):
-        block = User.query.filter_by(user_id=user_id).first()
+        user_to_unblock = self.db_manager.get_user_by_id(user_id)
 
-        if not block:
+        if not user_to_unblock:
             return "User cannot be unblocked"
         
-        setattr(block, 'is_blocked', 0)
-        db.session.commit()
-    
+        self.db_manager.unblock_user(user_id)
     
     # Function for waving a specific user fine
-    def waive_fine(self, user_id, fine_id):
-        fine_to_waive = Fine.query.filter_by(user_id=user_id, fine_id=fine_id).first()
+    def waive_fine(self, fine_id):
+        self.db_manager.waive_user_fine(fine_id)
 
-        if not fine_to_waive:
-            flash('There are no fines to waive.')
+    def insert_book(self, title, author):
+        self.catalogue_manager.insert_book(title, author)
+
+    def insert_book_item(self, book_id):
+        self.catalogue_manager.insert_book_item(book_id)
+
+    def remove_book(self, book_id):
+        self.catalogue_manager.remove_book(book_id)
+
         
-        db.session.delete(fine_to_waive)
-
-        db.session.commit()
-
-        flash('User fine waived.')
 
 
 
