@@ -126,15 +126,15 @@ class DBManager:
     
     # -----Admin-------
     # Function to add book to the database
-    def insert_book(self, title, author):
+    def insert_book(self, title, author, isbn):
         book = Book(
             book_id=str(uuid.uuid4()),
-            isbn='lol',
+            isbn=isbn,
             title=title,
             author=author,
-            publisher='lol',
-            num_of_pages='lol',
-            pub_date='lol'
+            publisher=None,
+            num_of_pages=None,
+            pub_date=None
         )
         db.session.add(book)
         db.session.commit()
@@ -145,7 +145,6 @@ class DBManager:
             book_item_id=str(uuid.uuid4()),
             book_id=str(book_id),
             is_borrowed=False,
-            due_date=""
         )
         db.session.add(book_item)
         db.session.commit()

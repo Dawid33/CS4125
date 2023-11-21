@@ -8,13 +8,14 @@ class Command(ABC):
         pass
 
 class AddBook(Command):
-    def __init__(self, title, author):
+    def __init__(self, title, author, isbn):
         self.title = title
         self.author = author
+        self.isbn = isbn
         self.catalogue_manager = Catalogue()
 
     def execute(self):
-        self.catalogue_manager.insert_book(self.title, self.author)
+        self.catalogue_manager.insert_book(self.title, self.author, self.isbn)
 
 class AddBookItem(Command):
     def __init__(self, book_id):
@@ -46,7 +47,7 @@ class BlockUser(Command):
         self.db_manager = DBManager()
 
     def execute(self):
-        self.db_manager.block_user
+        self.db_manager.block_user(self.user_id)
 
 class UnblockUser(Command):
     def __init__(self, user_id):
@@ -54,4 +55,4 @@ class UnblockUser(Command):
         self.db_manager = DBManager()
 
     def execute(self):
-        self.db_manager.unblock_user
+        self.db_manager.unblock_user(self.user_id)

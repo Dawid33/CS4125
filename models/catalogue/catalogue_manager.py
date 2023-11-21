@@ -10,8 +10,8 @@ class Catalogue(BookSearch):
         return self.db_manager.filter_books(title, author, isbn)
     
     # Adds or updates book with title and author
-    def insert_book(self, title, author):
-        self.db_manager.insert_book(title, author)
+    def insert_book(self, title, author, isbn):
+        self.db_manager.insert_book(title, author, isbn)
         
     def insert_book_item(self, book_id):
         self.db_manager.insert_book_item(book_id)

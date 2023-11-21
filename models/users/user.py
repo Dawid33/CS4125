@@ -10,10 +10,3 @@ class User(ABC):
 
     def __str__(self):
         return f"User Details( Id: {self.user_id}, Username: {self.username}, Email: {self.email} )"
-
-    # def notify_overdue_book(self, book):
-    #     pass
-    
-    # def notify_book_available(self, book):
-    #     pass
-    

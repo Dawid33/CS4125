@@ -40,14 +40,7 @@ def borrow(book_id):
                # Get the current date
                borrow_date = datetime.now()
 
-               # Calculate the date one week from now
-               due_date = borrow_date + timedelta(days=7)
-               
-               # Convert dates to strings with day, month, and year
-               borrow_date_str = borrow_date.strftime('%d-%m-%Y')
-               due_date_str = due_date.strftime('%d-%m-%Y')
-
-               if lending_manager.borrow_book(user, book_item, borrow_date_str, due_date_str):
+               if user.borrow_book(book_item, borrow_date):
                     print("OKAY")
                     result["success"] = True
                     break
