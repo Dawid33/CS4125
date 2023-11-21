@@ -1,9 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select, update
+from sqlalchemy import select
 from instance.db import *
 import uuid
 
 class DBManager:
+    # -----Authentication---------
     # Function to add a user to db
     def create_user(self, username, email, password, user_type):
         student_id = str(uuid.uuid1())
@@ -29,7 +29,9 @@ class DBManager:
     def get_user_by_email(self, email):
         user = User.query.filter_by(email=email).first()
         return user
-
+    
+    
+    # -----Lending Manager / Search-------
     # Query the database to get a book by its' id    
     def get_book_by_id(self, book_id):
         book = Book.query.filter_by(book_id=str(book_id)).first()
@@ -40,6 +42,89 @@ class DBManager:
         books = BookItem.query.filter_by(book_id=str(book_id)).all()
         return books
 
+    # Retrieves default catalogue
+    def get_default_catalog(self):
+        return db.session.execute(select(Book)).all()
+
+    # Retrieves all books with specified titile
+    def search_by_title(self, title):
+        search = "%{}%".format(title)
+        books = Book.query.filter(Book.title.like(search)).all()
+        return books
+
+    # Retrieves all books with the specified title, author and isbn
+    def filter_books(self, title, author, isbn):
+        """Fetch books from the database with optional filters."""
+        # Start with a query on the Book model
+        query = Book.query
+
+        # If a title is provided, add a filter for the title
+        if title:
+            search_title = f"%{title}%"
+            query = query.filter(Book.title.like(search_title))
+
+        # If an author is provided, add a filter for the author
+        if author:
+            search_author = f"%{author}%"
+            query = query.filter(Book.author.like(search_author))
+            
+        if isbn:
+            search_isbn = f"%{isbn}"
+            query = query.filter(Book.isbn.like(search_isbn))
+
+        # Execute the query and return the results
+        return query.all()
+    
+    
+    # -----User-------
+    # Function that returns all borrowed books by a user
+    def get_borrowed_books(self, user_id):
+        borrowed_books = (
+            db.session.query(Book, BorrowedBook.borrow_id)
+            .join(BookItem, BookItem.book_id == Book.book_id)
+            .join(BorrowedBook, BorrowedBook.book_item_id == BookItem.book_item_id)
+            .filter(BorrowedBook.user_id == user_id)
+            .all()
+        )
+        return borrowed_books
+    
+    # Function that returns a book copy after a user return a book
+    def return_book(self, borrow_id):
+        borrowed_book = BorrowedBook.query.filter_by(borrow_id=str(borrow_id)).first()
+        book_item = BookItem.query.filter_by(book_item_id=borrowed_book.book_item_id).first()
+        
+        # Update is_borrowed field to 0 in the BookItem table
+        setattr(book_item, 'is_borrowed', 0)
+        setattr(book_item, 'due_date', None)
+        db.session.commit()
+
+        # Delete the corresponding row from the BorrowedBook table
+        db.session.delete(borrowed_book)
+        db.session.commit()
+        
+    # Function that gets all user fines
+    def get_fines(self, user_id):
+        fines = Fine.query.filter_by(user_id=user_id).all()
+        return fines
+    
+    # Pays a single fine and resets the balance
+    def pay_fine(self, fine_id, new_balance):
+        fine_to_delete = Fine.query.filter_by(fine_id=str(fine_id)).one()
+        user = self.get_user_by_id(fine_to_delete.user_id)
+        
+        db.session.delete(fine_to_delete)
+        setattr(user, 'balance', new_balance)
+        
+        db.session.commit()
+            
+    # Sets a new balance    
+    def set_balance(self, user_id, new_balance):
+        user = self.get_user_by_id(user_id)
+        setattr(user, 'balance', new_balance)
+        db.session.commit()
+    
+    
+    # -----Admin-------
     # Function to add book to the database
     def insert_book(self, title, author):
         book = Book(
@@ -80,92 +165,14 @@ class DBManager:
         return True
     
     def remove_book(self, book_id):
-        book_to_remove = Book.query.filter_by(book_id = book_id).one()
+        book_to_remove = self.get_book_by_id(book_id)
         db.session.delete(book_to_remove)
         db.session.commit()
     
-    # Function that returns all borrowed books by a user
-    def get_borrowed_books(self, user_id):
-        borrowed_books = (
-            db.session.query(Book, BorrowedBook.borrow_id)
-            .join(BookItem, BookItem.book_id == Book.book_id)
-            .join(BorrowedBook, BorrowedBook.book_item_id == BookItem.book_item_id)
-            .filter(BorrowedBook.user_id == user_id)
-            .all()
-        )
-        return borrowed_books
-    
-    # Function that returns a book copy after a user return a book
-    def return_book(self, borrow_id):
-        borrowed_book = BorrowedBook.query.filter_by(borrow_id=str(borrow_id)).first()
-        book_item = BookItem.query.filter_by(book_item_id=borrowed_book.book_item_id).first()
-        
-        # Update is_borrowed field to 0 in the BookItem table
-        setattr(book_item, 'is_borrowed', 0)
-        setattr(book_item, 'due_date', None)
-        db.session.commit()
-
-        # Delete the corresponding row from the BorrowedBook table
-        db.session.delete(borrowed_book)
-        db.session.commit()
-
-    # Retrieves default catalogue
-    def get_default_catalog(self):
-        return db.session.execute(select(Book)).all()
-
-    # Retrieves all books with specified titile
-    def search_by_title(self, title):
-        search = "%{}%".format(title)
-        books = Book.query.filter(Book.title.like(search)).all()
-        return books
-
-    # Retrieves all books with the specified title, author and isbn
-    def filter_books(self, title, author, isbn):
-        """Fetch books from the database with optional filters."""
-        # Start with a query on the Book model
-        query = Book.query
-
-        # If a title is provided, add a filter for the title
-        if title:
-            search_title = f"%{title}%"
-            query = query.filter(Book.title.like(search_title))
-
-        # If an author is provided, add a filter for the author
-        if author:
-            search_author = f"%{author}%"
-            query = query.filter(Book.author.like(search_author))
-            
-        if isbn:
-            search_isbn = f"%{isbn}"
-            query = query.filter(Book.isbn.like(search_isbn))
-
-        # Execute the query and return the results
-        return query.all()
-    
+    # Deletes specified fine from the db    
     def waive_user_fine(self, fine_id):
         fine_to_waive = Fine.query.filter_by(fine_id=str(fine_id)).one()
         db.session.delete(fine_to_waive)
-        db.session.commit()
-    
-    # Function that gets all user fines
-    def get_fines(self, user_id):
-        fines = Fine.query.filter_by(user_id=user_id).all()
-        return fines
-    
-    # Pays a single fine and resets the balance
-    def pay_fine(self, fine_id, new_balance):
-        fine_to_delete = Fine.query.filter_by(fine_id=str(fine_id)).one()
-        user = User.query.filter_by(user_id=fine_to_delete.user_id).one()
-        
-        db.session.delete(fine_to_delete)
-        setattr(user, 'balance', new_balance)
-        
-        db.session.commit()
-            
-    # Sets a new balance    
-    def set_balance(self, user_id, new_balance):
-        user = User.query.filter_by(user_id=user_id).one()
-        setattr(user, 'balance', new_balance)
         db.session.commit()
 
     # Function for blocking a user
