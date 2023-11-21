@@ -5,7 +5,7 @@ from wtforms import StringField, SubmitField#
 # Ensure that all fields are filled out
 from wtforms.validators import DataRequired
 
-class AddBook(FlaskForm):
+class AddBookForm(FlaskForm):
     author = StringField('Author', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     isbn = StringField('ISBN', validators=[DataRequired()])

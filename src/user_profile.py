@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
-from src.forms import AddBook
+from src.forms import AddBookForm
+from models.users.command import *
 
 user_manager = UserManager()
 
@@ -23,7 +24,7 @@ def user_profile():
 @profile.route('/admin_profile', methods=['GET', 'POST'])
 def admin_profile():
     current_user = user_manager.get_current_user()
-    form = AddBook()  # Create an instance of the form
+    form = AddBookForm()  # Create an instance of the form
 
     # Pass the form to the template
     return render_template('user_profile/admin_profile.html', user=current_user, form=form)
@@ -62,11 +63,14 @@ def pay_fine(fine_id):
 
 @profile.route('/add_book', methods=['GET', 'POST'])
 def add_book():
-    add_book_form = AddBook()
+    add_book_form = AddBookForm()
     admin_user = user_manager.get_current_user()
+    insert_book = AddBook(add_book_form.title.data, add_book_form.author.data)
+    admin_user.add_admin_command(insert_book)
 
     if add_book_form.validate_on_submit():
-        admin_user.insert_book(add_book_form.title.data, add_book_form.author.data)
+        # admin_user.insert_book(add_book_form.title.data, add_book_form.author.data)
+        admin_user.execute_admin_commands()
 
     return redirect(url_for('profile.admin_profile'))  # Redirect back to the admin profile
 
