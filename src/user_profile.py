@@ -7,7 +7,7 @@ user_manager = UserManager()
 profile = Blueprint('profile', __name__)
 
 # API endpoint that loads the initial user profile page and passes in a user object
-@profile.route('/profile', methods=['GET', 'POST'])
+@profile.route('/profile', methods=['GET'])
 def user_profile():
     if 'user' not in session:
         return redirect(url_for('authentication.login'))
@@ -56,9 +56,6 @@ def pay_fine(fine_id):
         return redirect(url_for('profile.user_profile'))
     else:
         return redirect(url_for('profile.add_to_balance'))
-
-
-
 
 @profile.route('/add_book', methods=['GET', 'POST'])
 def add_book():
