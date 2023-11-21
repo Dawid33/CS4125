@@ -3,6 +3,7 @@ from models.users.user import User
 from models.catalogue.catalogue_manager import Catalogue
 from models.database_manager.db_manager import DBManager
 from instance.db import *
+from models.users.command import *
 
 # Admin user type controls the book catalogue, and can also block/unblock users and waive user fines
 # Extends the User class
@@ -12,7 +13,15 @@ class Admin(User):
 
         self.catalogue_manager = Catalogue()
         self.db_manager = DBManager()
+        self.admin_commands = []
         self.user_type = 'ADMIN'
+
+    def add_admin_command(self, command):
+        self.admin_commands.append(command)
+    
+    def execute_admin_commands(self):
+        for command in self.admin_commands:
+            command.execute()
 
     def get_user_type(self):
         return self.user_type
