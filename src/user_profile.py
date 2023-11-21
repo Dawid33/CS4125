@@ -1,5 +1,6 @@
-from flask import Blueprint, redirect, render_template, request, session, url_for
+from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
+from src.forms import AddBook
 
 user_manager = UserManager()
 
@@ -22,7 +23,10 @@ def user_profile():
 @profile.route('/admin_profile', methods=['GET', 'POST'])
 def admin_profile():
     current_user = user_manager.get_current_user()
-    return render_template('user_profile/admin_profile.html', user=current_user)
+    form = AddBook()  # Create an instance of the form
+
+    # Pass the form to the template
+    return render_template('user_profile/admin_profile.html', user=current_user, form=form)
 
 # API endpoint that triggeres return book on the user object
 @profile.route('/return_book/<uuid:borrow_id>', methods=['GET'])
@@ -56,3 +60,14 @@ def pay_fine(fine_id):
 
 
 
+@profile.route('/add_book', methods=['GET', 'POST'])
+def add_book():
+    add_book_form = AddBook()
+    admin_user = user_manager.get_current_user()
+
+    if add_book_form.validate_on_submit():
+        admin_user.insert_book(add_book_form.title.data, add_book_form.author.data)
+
+    return redirect(url_for('profile.admin_profile'))  # Redirect back to the admin profile
+
+    

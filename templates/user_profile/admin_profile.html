@@ -80,11 +80,26 @@
                 </button>
             </div>
             <div class="modal-body">
-                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                <form id="addBookForm" method="POST" action="{{url_for('profile.add_book')}}">
+                    <!-- For CSRF Token -->
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.author.label(class="col-md-6") }}
+                        {{ form.author(class="form-control", id="book_author") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.title.label(class="col-md-6") }}
+                        {{ form.title(class="form-control", id="book_title") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.isbn.label(class="col-md-6") }}
+                        {{ form.isbn(class="form-control", id="book_isbn") }}
+                    </div>
+                    <button type="submit" id="saveButton" class="btn btn-success">Save Changes</button>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
             </div>
         </div>
     </div>

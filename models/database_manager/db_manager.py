@@ -79,6 +79,11 @@ class DBManager:
         db.session.commit()
         return True
     
+    def remove_book(self, book_id):
+        book_to_remove = Book.query.filter_by(book_id = book_id).one()
+        db.session.delete(book_to_remove)
+        db.session.commit()
+    
     # Function that returns all borrowed books by a user
     def get_borrowed_books(self, user_id):
         borrowed_books = (
@@ -136,6 +141,11 @@ class DBManager:
 
         # Execute the query and return the results
         return query.all()
+    
+    def waive_user_fine(self, fine_id):
+        fine_to_waive = Fine.query.filter_by(fine_id=str(fine_id)).one()
+        db.session.delete(fine_to_waive)
+        db.session.commit()
     
     # Function that gets all user fines
     def get_fines(self, user_id):
