@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user_profile/user_profile.css') }}">
+<title>Profile</title>
+{% endblock head_extra %}
+
+{% block main %}
+<div class="jumbotron mt-4 mb-4" style="background-color: #e9ebe8;">
+    <div class="container login-container">
+        <h2 class="custom-header">Top Up Balance</h2>
+        <form method="post" action="/add_to_balance">
+            <div class="form-group">
+                    <label for="amount" class="custom-label">Amount:</label>
+                    <div class="d-flex align-items-center">
+                        <input type="number" class="form-control custom-input" name="amount" id="amount" max="50" required>
+                        <h3 class="ml-2 mb-1">€</h3>
+                    </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success custom-button">Add</button>
+            </div>
+        </form>
+        <a href="/profile">Cancel</a>
+    </div>
+</div>
+
+{% endblock main %}
