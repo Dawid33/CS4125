@@ -7,40 +7,60 @@
 
 {% block main %}
 
-<main>
-    <div>
-        <nav>
-            <h5> Search Options </h5>
-            Search for books by <b>Title</b> | <b>Author</b> | <b>ISBN</b>
-            </br> Enter the details and click search.
-        </nav>
+    <main class="py-4">
+        <div class="container">
+            <nav>
+                <h5> Search Options </h5>
+                Search for books by <b>Title</b>, <b>Author</b>, or <b>ISBN</b>
+                <br> Enter the details and click search.
+            </nav>
 
-        <div class="search-bar mb-3 ml-2 mr-4">
-            <!-- Search form -->
-            <form action="{{ url_for('search.search_books') }}" method="get">
-                <label for="title" class="ml-2">Title</label>
-                <input class="form-control ml-2" type="text" name="title" placeholder="Patterns in Enterprise Software"><br>
-                <label for="author" class="ml-2">Author</label>
-                <input class="form-control ml-2" type="text" name="author" placeholder="Martin Fowler"><br>
-                <label for="isbn" class="ml-2">ISBN</label>
-                <input class="form-control ml-2" type="text" name="isbn" placeholder=" 9780140327595"><br>
-                <input class="btn btn-primary ml-2 btn-wide font-weight-bold" type="submit" value="Search">
-            </form>
+            <!-- Search by Title -->
+            <div class="input-group mb-3">
+                <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
+                    <input type="text" class="form-control" name="title" placeholder="Enter book title"
+                           aria-label="Book title">
+                    <div class="input-group-append">
+                        <button class="btn btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Search by Author -->
+            <div class="input-group mb-3">
+                <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
+                    <input type="text" class="form-control" name="author" placeholder="Enter author's name"
+                           aria-label="Author's name">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Search by ISBN -->
+            <div class="input-group mb-3">
+                <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
+                    <input type="text" class="form-control" name="isbn" placeholder="Enter ISBN number"
+                           aria-label="ISBN number">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <content>
-        <!-- Check if there are books in the list -->
-        {% if books %}
-            <!-- Iterate over each book and include the book_card template -->
-            {% for book in books %}
-                {% include "search/book_card.html" with context %}
-            {% endfor %}
-        {% else %}
-            <!-- Display a message if no books were found -->
-            <h5>No books found. Try a different search.</h5>
-        {% endif %}
-    </content>
-</main>
+        <content class="container">
+            <!-- Check if there are books in the list -->
+            {% if books %}
+                <!-- Iterate over each book and include the book_card template -->
+                {% for book in books %}
+                    {% include "search/book_card.html" with context %}
+                {% endfor %}
+            {% else %}
+                <!-- Display a message if no books were found -->
+                <h5>No books found. Try a different search.</h5>
+            {% endif %}
+        </content>
+    </main>
 
 {% endblock main %}
