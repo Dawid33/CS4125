@@ -15,37 +15,42 @@
                 <br> Enter the details and click search.
             </nav>
 
-            <!-- Search by Title -->
-            <div class="input-group mb-3">
-                <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
-                    <input type="text" class="form-control" name="title" placeholder="Enter book title"
-                           aria-label="Book title">
-                    <div class="input-group-append">
-                        <button class="btn btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
-            </div>
+            <div class="ml-3">
+                <!-- Search by Title -->
+                <div class="input-group mb-3">
+                    <label>Title</label>
+                    <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
+                        <input type="text" class="form-control w-75" name="title" placeholder="Enter book title"
+                            aria-label="Book title">
+                        <div class="input-group-append">
+                            <button class="btn btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
 
-            <!-- Search by Author -->
-            <div class="input-group mb-3">
-                <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
-                    <input type="text" class="form-control" name="author" placeholder="Enter author's name"
-                           aria-label="Author's name">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
-            </div>
+                <!-- Search by Author -->
+                <div class="input-group mb-3">
+                    <label>Author</label>
+                    <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
+                        <input type="text" class="form-control w-75" name="author" placeholder="Enter author's name"
+                            aria-label="Author's name">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
 
-            <!-- Search by ISBN -->
-            <div class="input-group mb-3">
-                <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
-                    <input type="text" class="form-control" name="isbn" placeholder="Enter ISBN number"
-                           aria-label="ISBN number">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
+                <!-- Search by ISBN -->
+                <div class="input-group mb-3">
+                    <label>ISBN</label>
+                    <form action="{{ url_for('search.search_books') }}" method="get" class="form-inline w-100">
+                        <input type="text" class="form-control w-75" name="isbn" placeholder="Enter ISBN number"
+                            aria-label="ISBN number">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
