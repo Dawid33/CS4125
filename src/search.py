@@ -41,9 +41,9 @@ def search_books():
     elif isbn:
         catalogue.set_search_strategy(SearchByISBNStrategy())
         books = catalogue.execute_search(isbn)
-    else:
-        # Use the default strategy to get all books
-        books = catalogue.execute_search()
+    # else:
+    #     # Use the default strategy to get all books
+    #     books = catalogue.execute_search()
 
     # Render the search results in the HTML template
     return render_template('search/search.html', books=books)

@@ -39,16 +39,16 @@ class SearchByISBNStrategy(BookSearchStrategy):
         return db_manager.search_by_isbn(term)
     
     
-class SearchAllBooksStrategy(BookSearchStrategy):
-    def search(self, term=None):
-        """
-        Retrieve all books from the database.
+# class SearchAllBooksStrategy(BookSearchStrategy):
+#     def search(self, term=None):
+#         """
+#         Retrieve all books from the database.
 
-        This strategy ignores the 'term' parameter and returns all book entries.
-        It's used as the default search strategy when no specific criteria are provided.
+#         This strategy ignores the 'term' parameter and returns all book entries.
+#         It's used as the default search strategy when no specific criteria are provided.
 
-        Returns:
-            List of all Book objects in the database.
-        """
-        db_manager = DBManager()
-        return db_manager.get_default_catalog()
+#         Returns:
+#             List of all Book objects in the database.
+#         """
+#         db_manager = DBManager()
+#         return db_manager.get_default_catalog()
