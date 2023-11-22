@@ -46,3 +46,21 @@ class Catalogue:
         if not self.search_strategy:
             raise Exception("No search strategy set")
         return self.search_strategy.search(term)
+    
+    # Adds or updates book with title and author
+    def insert_book(self, title, author, isbn):
+        self.db_manager.insert_book(title, author, isbn)
+        
+    def insert_book_item(self, book_id):
+        self.db_manager.insert_book_item(book_id)
+
+    def get_book(self, book_id):
+        return self.db_manager.get_book_by_id(book_id)
+
+    def get_book_items(self, book_id):
+         return self.db_manager.get_book_items_by_book_id(book_id)
+        
+    
+    def remove_book(self, book_id):
+        pass
+   
