@@ -1,9 +1,15 @@
 from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
+<<<<<<< Updated upstream
 from src.forms import AddBookForm
 from models.users.admin_command import *
+=======
+from models.notification import EmailNotification, Notification
+from models.notification_manager import NotificationManager
+>>>>>>> Stashed changes
 
 user_manager = UserManager()
+notification_manager = NotificationManager()
 
 profile = Blueprint('profile', __name__)
 
@@ -34,7 +40,8 @@ def admin_profile():
 def return_book(borrow_id):
     current_user = user_manager.get_current_user()
     current_user.return_book(borrow_id)
-    
+
+    notification_manager.send_book_return_confirmation(current_user.email, "DEFAULT")
     return redirect(url_for('profile.user_profile'))
 
 # API endpoint that triggers the top up fuctionality
