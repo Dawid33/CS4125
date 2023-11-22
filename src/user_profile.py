@@ -1,12 +1,9 @@
 from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
-<<<<<<< Updated upstream
 from src.forms import AddBookForm
 from models.users.admin_command import *
-=======
 from models.notification import EmailNotification, Notification
 from models.notification_manager import NotificationManager
->>>>>>> Stashed changes
 
 user_manager = UserManager()
 notification_manager = NotificationManager()
