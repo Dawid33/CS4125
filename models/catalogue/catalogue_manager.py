@@ -1,7 +1,8 @@
 from models.catalogue.book_search_strategies import (
     SearchByTitleStrategy,
     SearchByAuthorStrategy,
-    SearchByISBNStrategy
+    SearchByISBNStrategy,
+    SearchAllBooksStrategy
 )
 from models.database_manager.db_manager import DBManager
 
@@ -19,7 +20,7 @@ class Catalogue:
     def __init__(self):
         self.db_manager = DBManager()
         # No default strategy
-        self.search_strategy = None
+        self.search_strategy = SearchAllBooksStrategy()
 
     def set_search_strategy(self, strategy):
         """
@@ -27,25 +28,26 @@ class Catalogue:
         """
         self.search_strategy = strategy
 
-    def execute_search(self, term):
+    def execute_search(self, term=None):
         """
-        Executes a search using the current search strategy.
+        Executes a search using the current search strategy or the default strategy if no term is provided.
 
-        This method relies on a search strategy being set beforehand; if no strategy is set, it raises an exception.
-        The search is performed by calling the search method of the strategy with the provided search term.
+        If a term is provided, the search will be performed according to the set strategy using that term. 
+        If no term is provided and the default strategy is set, all books will be retrieved.
 
         Parameters:
-        - term (str): The search term to be used by the strategy for finding books.
+        - term (str, optional): The search term to be used by the strategy for finding books. Defaults to None.
 
         Returns:
-        - A list of books that match the search criteria of the current strategy.
+        - List[Book]: A list of books that match the search criteria or all books if no term is provided.
 
         Raises:
-        - Exception: If no search strategy has been set prior to calling this method.
+        - Exception: If no search strategy has been set and no term is provided.
         """
         if not self.search_strategy:
             raise Exception("No search strategy set")
         return self.search_strategy.search(term)
+
     
     # Adds or updates book with title and author
     def insert_book(self, title, author, isbn):
