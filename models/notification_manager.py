@@ -1,4 +1,4 @@
-from models.notification import EmailNotification, Notification
+from models.notification import EmailDecorator, Notification, SmsDecorator
 
 class NotificationManager():
 
@@ -9,8 +9,10 @@ class NotificationManager():
 
         Kind Regards,
         Library Management Team."""
-        notification = EmailNotification(Notification(msg))
-        notification.send_with_subject(email, "Succesfully borrowed book!")
+        notification = Notification(msg)
+        notification = EmailDecorator(notification, "Succesfully borrowed book!")
+        notification = SmsDecorator(notification)
+        notification.send(email)
 
     def send_book_return_confirmation(self, email, book_title):
         msg = f"""
@@ -19,6 +21,8 @@ class NotificationManager():
 
         Kind Regards,
         Library Management Team."""
-        notification = EmailNotification(Notification(msg))
-        notification.send_with_subject(email, "Succesfully returned book!")
+        notification = Notification(msg)
+        notification = EmailDecorator(notification, "Succesfully returned book!")
+        notification = SmsDecorator(notification)
+        notification.send(email)
 

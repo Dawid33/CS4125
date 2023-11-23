@@ -3,6 +3,7 @@ from models.database_manager.db_manager import DBManager
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from os import getenv
+from typing import Dict
 import smtplib
 import datetime
 import threading
@@ -21,10 +22,10 @@ class Notification(INotify):
     Default implementation prints to console.
     """
     def send(self, recipient):
-        print(f"Mock send of notification to {recipient}.")
+        print(f"Send notification to {recipient}.")
 
 
-class EmailNotification(INotify):
+class SmsDecorator(INotify):
     def __init__(self, component : INotify):
         self._component = component
 
@@ -33,10 +34,21 @@ class EmailNotification(INotify):
         return self._component
 
     def send(self, recipient):
-        self.send_with_subject(recipient, "Default Subject")
-
-    def send_with_subject(self, recipient, subject):
         self._component.send(recipient)
+        print(f"Sending message via SMS")
+
+class EmailDecorator(INotify):
+    def __init__(self, component : INotify, subject):
+        self._component = component
+        self.subject = subject
+
+    @property
+    def component(self) -> INotify:
+        return self._component
+
+    def send(self, recipient):
+        self._component.send(recipient)
+        print(f"Sending message via email")
         email_user = getenv('EMAIL_USER')
         email_password = getenv('EMAIL_PASSWORD')
         email_domain = getenv('EMAIL_DOMAIN')
@@ -50,7 +62,7 @@ class EmailNotification(INotify):
             email_domain = "smtp.fastmail.com"
 
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = subject
+        msg['Subject'] = self.subject
         msg['From'] = email_user
         msg['To'] = recipient
         msg.attach(MIMEText(self._component.message, 'plain'))
