@@ -4,7 +4,7 @@
 
 from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
-from src.forms import AddBookForm
+from src.forms import *
 from models.users.admin_command import *
 from models.notifications.notification import EmailDecorator, Notification
 from models.notifications.notification_manager import NotificationManager
