@@ -2,13 +2,13 @@
 # pylint: disable=import-error
 # pylint: disable=no-name-in-module
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
+from flask import Blueprint, render_template
 from models.database_manager.db_manager import DBManager
 from models.lend_withdraw.lending_manager import LendingManager
 from models.users.user_manager import UserManager
-from models.notification_manager import NotificationManager
+from models.notifications.notification_manager import NotificationManager
 from models.catalogue.catalogue_manager import Catalogue
-from datetime import datetime, timedelta
+from datetime import datetime
 
 book = Blueprint('book', __name__)
 

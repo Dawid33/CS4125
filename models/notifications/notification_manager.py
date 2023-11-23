@@ -2,7 +2,7 @@
 # pylint: disable=import-error
 # pylint: disable=no-name-in-module
 
-from models.notification import EmailDecorator, Notification, SmsDecorator
+from models.notifications.notification import EmailDecorator, Notification, SmsDecorator
 
 class NotificationManager():
 

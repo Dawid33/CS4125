@@ -6,8 +6,8 @@ from flask import Blueprint, redirect, render_template, request, session, url_fo
 from models.users.user_manager import UserManager
 from src.forms import AddBookForm
 from models.users.admin_command import *
-from models.notification import EmailDecorator, Notification
-from models.notification_manager import NotificationManager
+from models.notifications.notification import EmailDecorator, Notification
+from models.notifications.notification_manager import NotificationManager
 
 user_manager = UserManager()
 notification_manager = NotificationManager()

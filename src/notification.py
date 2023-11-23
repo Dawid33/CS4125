@@ -2,7 +2,7 @@
 # pylint: disable=import-error
 # pylint: disable=no-name-in-module
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint
 from models.database_manager.db_manager import DBManager
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
