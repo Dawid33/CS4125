@@ -10,3 +10,11 @@ class AddBookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     isbn = StringField('ISBN', validators=[DataRequired()])
     submit = SubmitField('Add Book')
+
+class WaiveFineForm(FlaskForm):
+    user = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+class BlockUserForm(FlaskForm):
+    user = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Search')
