@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from flask_wtf import FlaskForm
 # StringField is basically an input box
 # SubmitField is for the submit button

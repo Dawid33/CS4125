@@ -1,4 +1,7 @@
-# search.py
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from flask import Blueprint, render_template, request
 from models.catalogue.catalogue_manager import Catalogue
 from models.catalogue.book_search_strategies import (

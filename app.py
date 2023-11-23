@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from flask import Flask, render_template
 import multiprocessing
 from instance.db import db

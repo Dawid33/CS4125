@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, abort
 from models.database_manager.db_manager import DBManager
 from models.lend_withdraw.lending_manager import LendingManager

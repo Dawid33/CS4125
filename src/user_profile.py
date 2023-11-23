@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
 from src.forms import AddBookForm

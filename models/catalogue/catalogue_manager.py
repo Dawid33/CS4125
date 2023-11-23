@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from models.catalogue.book_search_strategies import (
     SearchByTitleStrategy,
     SearchByAuthorStrategy,

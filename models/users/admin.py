@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from models.users.user import User
 from instance.db import *
 from models.users.admin_command import *
