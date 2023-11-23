@@ -14,7 +14,7 @@ class NotificationManager():
         Kind Regards,
         Library Management Team."""
         notification = Notification(msg)
-        notification = EmailDecorator(notification, "Succesfully borrowed book!")
+        notification = EmailDecorator(notification, "Succesfully borrowed book!!")
         notification = SmsDecorator(notification)
         notification.send(email)
 
@@ -26,7 +26,7 @@ class NotificationManager():
         Kind Regards,
         Library Management Team."""
         notification = Notification(msg)
-        notification = EmailDecorator(notification, "Succesfully returned book!")
+        notification = EmailDecorator(notification, "Succesfully returned book!!")
         notification = SmsDecorator(notification)
         notification.send(email)
 
