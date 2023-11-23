@@ -46,8 +46,8 @@
                             {% if user.get_fines() %}
                             <thead>
                                 <tr>
-                                    <th>Reason</th>
-                                    <th class="font-weight-normal">Amount</th>
+                                    <th id="reason">Reason</th>
+                                    <th id="amount" class="font-weight-normal">Amount</th>
                                 </tr>
                             </thead>
                                 <tbody>
@@ -69,7 +69,7 @@
                             {% else %}
                             <thead>
                                 <tr>
-                                    <th>No Pending Fines</th>
+                                    <th id="no_fines">No Pending Fines</th>
                                 </tr>
                             </thead> 
                             {% endif %}
@@ -87,8 +87,8 @@
                             {% if user.get_borrowed_books() %}
                             <thead>
                                 <tr>
-                                    <th>Book Title</th>
-                                    <th>Author</th>
+                                    <th id="book_title">Book Title</th>
+                                    <th id="author">Author</th>
                                 </tr>
                             </thead>
                                 <tbody>
@@ -105,7 +105,7 @@
                             {% else %}
                             <thead>
                                 <tr>
-                                    <th>No Books Borrowed</th>
+                                    <th id="no_books">No Books Borrowed</th>
                                 </tr>
                             </thead>
                             {% endif %}

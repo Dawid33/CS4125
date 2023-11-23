@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from models.database_manager.db_manager import DBManager
 
 class LendingManager:
@@ -7,8 +11,8 @@ class LendingManager:
     def get_borrowed_books(self, user_id):
         return self.db_manager.get_borrowed_books(user_id)
     
-    def borrow_book(self, user, book_item, borrow_date, due_date) -> bool:
-        return self.db_manager.insert_borrowed_book(user.user_id, book_item, borrow_date, due_date)
+    def borrow_book(self, user_id, book_item, borrow_date, due_date) -> bool:
+        return self.db_manager.insert_borrowed_book(user_id, book_item, borrow_date, due_date)
     
     def return_book(self, borrow_id):
         self.db_manager.return_book(borrow_id)

@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from models.database_manager.db_manager import DBManager
 from models.users.admin import Admin
 from instance.db import Fine

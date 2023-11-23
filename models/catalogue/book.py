@@ -1,3 +1,7 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 class Book:
     def __init__(book_id, self, isbn, author, title, publisher, publication_date, num_pages):
         self.id = book_id

@@ -1,9 +1,16 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from flask import Blueprint, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
-from src.forms import *
-from models.users.command import *
+from src.forms import AddBookForm
+from models.users.admin_command import *
+from models.notifications.notification import EmailDecorator, Notification
+from models.notifications.notification_manager import NotificationManager
 
 user_manager = UserManager()
+notification_manager = NotificationManager()
 
 profile = Blueprint('profile', __name__)
 
@@ -23,13 +30,13 @@ def user_profile():
 # API endpoint that loads the admin profile page
 @profile.route('/admin_profile', methods=['GET', 'POST'])
 def admin_profile():
-    current_user = user_manager.get_current_user()
-    form = AddBookForm()  # Create an instance of the form for each new request
+    admin_user = user_manager.get_current_user()
+    form = AddBookForm()  # Create an instance of the form
     waive_fine_form = WaiveFineForm()
     block_user_form = BlockUserForm()
 
     # Pass the form to the template
-    return render_template('user_profile/admin_profile.html', user=current_user, form=form, waive_fine_form=waive_fine_form, 
+    return render_template('user_profile/admin_profile.html', user=admin_user, form=form, waive_fine_form=waive_fine_form, 
                             block_user_form=block_user_form)
 
 # API endpoint that triggeres return book on the user object
@@ -37,7 +44,8 @@ def admin_profile():
 def return_book(borrow_id):
     current_user = user_manager.get_current_user()
     current_user.return_book(borrow_id)
-    
+
+    notification_manager.send_book_return_confirmation(current_user.email, "DEFAULT")
     return redirect(url_for('profile.user_profile'))
 
 # API endpoint that triggers the top up fuctionality
@@ -64,8 +72,11 @@ def pay_fine(fine_id):
 @profile.route('/add_book', methods=['GET', 'POST'])
 def add_book():
     add_book_form = AddBookForm()
+    
+    # Add the insert book command to the admin user using the command design pattern
     admin_user = user_manager.get_current_user()
-    insert_book = AddBook(add_book_form.title.data, add_book_form.author.data)
+    insert_book = AddBook(add_book_form.title.data, add_book_form.author.data, add_book_form.isbn.data)
+    
     admin_user.add_admin_command(insert_book)
 
     if add_book_form.validate_on_submit():

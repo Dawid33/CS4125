@@ -1,4 +1,9 @@
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
+
 from abc import ABC, abstractmethod
+from datetime import timedelta
 from models.users.user import User
 from models.lend_withdraw.lending_manager import LendingManager
 
@@ -52,7 +57,7 @@ class LibraryMember(User, ABC):
             return False
 
     @abstractmethod
-    def borrow_book(self, book_item):
+    def borrow_book(self, book_item, borrow_date):
         pass
 
 # Student class that extends library member, defines the book limit, student user type and
@@ -72,8 +77,15 @@ class Student(LibraryMember):
     def get_book_limit(self):
         return self.book_limit
     
-    def borrow_book(self, book_item):
-        pass
+    def borrow_book(self, book_item, borrow_date):
+        # For students the due date is always a week after borrow date
+        due_date = borrow_date + timedelta(days=7)
+               
+        # Convert dates to strings with day, month, and year
+        borrow_date_str = borrow_date.strftime('%d-%m-%Y')
+        due_date_str = due_date.strftime('%d-%m-%Y')
+        
+        return self.lending_manager.borrow_book(self.user_id, book_item, borrow_date_str, due_date_str)
     
 # Faculty class that extends library member, defines the book limit, faculty user type and
 # functionality for borrowing books
@@ -92,8 +104,15 @@ class Faculty(LibraryMember):
     def get_book_limit(self):
         return self.book_limit
     
-    def borrow_book(self, book_item):
-        pass
+    def borrow_book(self, book_item, borrow_date):
+        # For Faculty the due date is always 2 weeks after borrow date
+        due_date = borrow_date + timedelta(days=14)
+               
+        # Convert dates to strings with day, month, and year
+        borrow_date_str = borrow_date.strftime('%d-%m-%Y')
+        due_date_str = due_date.strftime('%d-%m-%Y')
+        
+        return self.lending_manager.borrow_book(self.user_id, book_item, borrow_date_str, due_date_str)
 
     def change_state(self, state):
         self.state = state

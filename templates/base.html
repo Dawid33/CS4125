@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
-
   {% block head %}
   <link href="{{ url_for('static', filename='base.css') }}" rel="stylesheet" />
   {% endblock head %}
@@ -22,7 +21,7 @@
     <div>
       <nav>
         <ul>
-          <img src="{{ url_for('static', filename='assets/favicon.ico') }}" />
+          <img src="{{ url_for('static', filename='assets/favicon.ico') }}" alt="Library Image" />
           <a href="/">
             <h2>Library</h2>
           </a>

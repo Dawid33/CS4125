@@ -1,8 +1,12 @@
-from abc import ABC, abstractmethod
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
 
-class UserState:
-    def send_message():
-        pass
+# from abc import ABC, abstractmethod
 
-    def access_resource():
-        pass
+# class UserState(ABC):
+#     def send_message():
+#         pass
+
+#     def access_resource():
+#         pass

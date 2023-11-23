@@ -1,15 +1,19 @@
-from models.users.user_state import *
+# pylint: disable=too-few-public-methods
+# pylint: disable=import-error
+# pylint: disable=no-name-in-module
 
-class ActivesState(UserState):
-    def send_message(self):
-        print("Message Received")
+# from models.users.user_state import *
 
-    def access_resource(self):
-        print("Access Granted")
+# class ActivesState(UserState):
+#     def send_message(self):
+#         print("Message Received")
 
-class BlockedSate(UserState):
-    def send_message():
-        print("User is blocked")
+#     def access_resource(self):
+#         print("Access Granted")
 
-    def access_resource():
-        print("Denied. User is blocked")
+# class BlockedSate(UserState):
+#     def send_message():
+#         print("User is blocked")
+
+#     def access_resource():
+#         print("Denied. User is blocked")

@@ -3,6 +3,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 1rem;
+  padding-top: 0rem;
 }
 
 main>div {
@@ -65,7 +66,7 @@ body>hr {
   width: 40px;
   height: 40px;
   transform: rotate(45deg);
-  background-color: var(--purple);
+  background-color: rgb(0, 123, 255);
 }
 
 .card p,
@@ -95,6 +96,7 @@ hr {
   padding: 1%;
   margin: 1%;
 }
+
 .btn-wide {
   width: 100%;
 }
