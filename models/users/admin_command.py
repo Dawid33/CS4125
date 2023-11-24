@@ -38,25 +38,29 @@ class RemoveBook(Command):
         self.catalogue_manager.remove_book(self.book_id)
 
 class WaiveFine(Command):
-    def __init__(self, fine_id):
-        self.fine_id = fine_id
+    def __init__(self, username):
+        self.username = username
         self.db_manager = DBManager()
 
     def execute(self):
-        self.db_manager.waive_user_fine(self.fine_id)
+        user = self.db_manager.get_user_by_username(self.username)
+        self.db_manager.waive_user_fine(user.user_id)
 
 class BlockUser(Command):
-    def __init__(self, user_id):
-        self.user_id = user_id
+    def __init__(self, user_name):
+        self.user_name = user_name
         self.db_manager = DBManager()
 
     def execute(self):
-        self.db_manager.block_user(self.user_id)
+        user = self.db_manager.get_user_by_username(self.user_name)
+        self.db_manager.block_user(user.user_id)
 
 class UnblockUser(Command):
-    def __init__(self, user_id):
-        self.user_id = user_id
+    def __init__(self, user_name):
+        self.user_name = user_name
         self.db_manager = DBManager()
 
     def execute(self):
-        self.db_manager.unblock_user(self.user_id)
+        user = self.db_manager.get_user_by_username(self.user_name)
+        self.db_manager.unblock_user(user.user_id)
+    

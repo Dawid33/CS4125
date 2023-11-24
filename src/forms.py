@@ -17,8 +17,16 @@ class AddBookForm(FlaskForm):
 
 class WaiveFineForm(FlaskForm):
     user = StringField('Username', validators=[DataRequired()])
-    submit = SubmitField('Search')
+    submit = SubmitField('Delete')
 
 class BlockUserForm(FlaskForm):
     user = StringField('Username', validators=[DataRequired()])
     submit = SubmitField('Search')
+
+class UnblockUserForm(FlaskForm):
+    user = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+class RemoveBookForm(FlaskForm):
+    isbn = StringField('ISBN', validators=[DataRequired()])
+    Submit = SubmitField('Delete')

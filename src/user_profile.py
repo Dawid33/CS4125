@@ -2,7 +2,7 @@
 # pylint: disable=import-error
 # pylint: disable=no-name-in-module
 
-from flask import Blueprint, redirect, render_template, request, session, url_for, abort
+from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for, abort
 from models.users.user_manager import UserManager
 from src.forms import *
 from models.users.admin_command import *
@@ -34,10 +34,12 @@ def admin_profile():
     form = AddBookForm()  # Create an instance of the form
     waive_fine_form = WaiveFineForm()
     block_user_form = BlockUserForm()
+    remove_book_form = RemoveBookForm()
+    unblock_user_form = UnblockUserForm()
 
     # Pass the form to the template
     return render_template('user_profile/admin_profile.html', user=admin_user, form=form, waive_fine_form=waive_fine_form, 
-                            block_user_form=block_user_form)
+                            block_user_form=block_user_form, remove_book_form=remove_book_form, unblock_user_form=unblock_user_form)
 
 # API endpoint that triggeres return book on the user object
 @profile.route('/return_book/<uuid:borrow_id>', methods=['GET'])
@@ -84,6 +86,20 @@ def add_book():
 
     return redirect(url_for('profile.admin_profile'))  # Redirect back to the admin profile
 
+@profile.route('/remove_book', methods=['POST'])
+def remove_book():
+    remove_book_form = RemoveBookForm()
+
+    admin_user = user_manager.get_current_user()
+    remove_book = RemoveBook(remove_book_form.isbn.data)
+    
+    admin_user.add_admin_command(remove_book)
+
+    if remove_book_form.validate_on_submit():
+        admin_user.execute_admin_commands()
+    
+    return redirect(url_for('profile.admin_profile'))
+
 @profile.route('/waive_fine', methods=['GET', 'POST'])
 def waive_fine():
     waive_fine_form = WaiveFineForm()
@@ -108,5 +124,14 @@ def block_user():
 
     return redirect(url_for('profile.admin_profile'))
 
+@profile.route('/unblock_user', methods=['GET', 'POST'])
+def unblock_user():
+    unblock_user_form = UnblockUserForm()
+    admin_user = user_manager.get_current_user()
+    unblock_user = UnblockUser(unblock_user_form.user.data)
+    admin_user.add_admin_command(unblock_user)
 
-    
+    if unblock_user_form.validate_on_submit():
+        admin_user.execute_admin_commands()
+
+    return redirect(url_for('profile.admin_profile'))
