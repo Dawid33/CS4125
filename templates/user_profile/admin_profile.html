@@ -20,11 +20,43 @@
                 </button>
             </div>
             <div class="modal-body">
-                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                <form id="blockUserForm", method="POST", action="{{url_for('profile.block_user')}}">
+                    {{block_user_form.hidden_tag()}}
+                    <div class="form-group">
+                        {{block_user_form.user.label}}
+                        {{block_user_form.user(class="form-control", id="user_name")}}
+                    </div>
+                    <button type="submit", id="saveButton", class="btn btn-success">Block</button>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+                <button type="button" id="closeButton" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="longUnblockUser" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Select a user to unblock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="unblockUserForm", method="POST", action="{{url_for('profile.unblock_user')}}">
+                    {{unblock_user_form.hidden_tag()}}
+                    <div class="form-group">
+                        {{unblock_user_form.user.label}}
+                        {{unblock_user_form.user(class="form-control", id="user_name")}}
+                    </div>
+                    <button type="submit", id="saveButton", class="btn btn-success">Unblock</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -34,37 +66,23 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalTitleBlock">Select a user fine to waive</h5>
+                <h5 class="modal-title" id="ModalTitleBlock">Waive a Fine</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                <form id="waiveFineForm", method="POST", action="{{url_for('profile.waive_fine')}}">
+                    {{waive_fine_form.hidden_tag()}}
+                    <div class="form-group">
+                        {{waive_fine_form.user.label}}
+                        {{waive_fine_form.user(class="form-control", id="user_id")}}
+                    </div>
+                    <button type="submit", id="saveButton", class="btn btn-success">Delete</button>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="longDeleteBook" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalTitleBlock">Select a book to remove</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ABCDEFGHIJKLMNOPQRSTUVWXYZ
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
-                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
+                <button type="button" id="closeButton" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -100,6 +118,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" id="closeButton" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="longDeleteBook" tabindex="-1" role="dialog" aria-labelledby="ModalTitleBlock" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitleBlock">Select a book to remove</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-success">Save Changes</button>
             </div>
         </div>
     </div>
@@ -156,10 +194,10 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#longBlockUser">Block Users</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#longBlockUser">Block Users</button>
                             </li>
                             <li class="list-group-item">
-                                <button type="button" class="btn btn-primary" onclick="unblock_user()">Unblock Users</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#longUnblockUser">Unblock Users</button>
                             </li>
                             <li class="list-group-item">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#longWaiveUser">Waive User Fine</button>

@@ -2,6 +2,7 @@
 # pylint: disable=import-error
 # pylint: disable=no-name-in-module
 
+from flask import flash
 from sqlalchemy import select
 from instance.db import *
 import uuid
@@ -187,10 +188,13 @@ class DBManager:
         db.session.commit()
 
     # Deletes specified fine from the db    
-    def waive_user_fine(self, fine_id):
-        fine_to_waive = Fine.query.filter_by(fine_id=str(fine_id)).one()
-        db.session.delete(fine_to_waive)
-        db.session.commit()
+    def waive_user_fine(self, user_id):
+        fine_to_waive = Fine.query.filter_by(user_id=str(user_id)).first()
+        if fine_to_waive is not None:
+            db.session.delete(fine_to_waive)
+            db.session.commit()
+        else:
+            print("unable to print", user_id.user_id)
 
     # Function for blocking a user
     def block_user(self, user_id):

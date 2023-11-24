@@ -14,3 +14,19 @@ class AddBookForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     isbn = StringField('ISBN', validators=[DataRequired()])
     submit = SubmitField('Add Book')
+
+class WaiveFineForm(FlaskForm):
+    user = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Delete')
+
+class BlockUserForm(FlaskForm):
+    user = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+class UnblockUserForm(FlaskForm):
+    user = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+class RemoveBookForm(FlaskForm):
+    isbn = StringField('ISBN', validators=[DataRequired()])
+    Submit = SubmitField('Delete')
